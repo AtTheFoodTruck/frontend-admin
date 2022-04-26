@@ -1,4 +1,5 @@
 import { Container, Col, Row, Button, Form } from 'react-bootstrap';
+import React from 'react';
 
 const MenuRegister = () => {
   return (
