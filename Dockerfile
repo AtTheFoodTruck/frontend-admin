@@ -13,6 +13,8 @@ COPY . .
 
 # 리액트 빌드
 RUN npm run build
+CMD ["react-scripts", "start"]
+
 
 FROM nginx:latest
 # nginx의 기본 설정을 삭제하고 앱 소스에서 설정한 파일을 복사
