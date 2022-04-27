@@ -1,0 +1,123 @@
+@import "./global.scss";
+
+#modal.modal_overlay {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3.25px);
+
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include boxShadow();
+
+  .modal_window {
+    display: grid;
+    grid-template-columns: 250px 300px 300px;
+    grid-template-rows: 30px 180px 65px 50px;
+
+    grid-auto-flow: row dense;
+    justify-content: center;
+    align-content: center; //
+
+    position: relative;
+    width: 850px;
+    height: $modal-height;
+    background-color: #141414;
+    color: $common-color;
+    padding: 10px 22px;
+    z-index: 1000;
+    border-radius: 4px;
+    @include boxShadow();
+    .close_btn {
+      position: absolute;
+      font-size: 20px;
+      top: 13px;
+      right: 10px;
+      color: $title-color;
+      font-weight: bold;
+    }
+    .poster_img {
+      grid-row: 1 / 5;
+      justify-self: center;
+      align-self: center;
+      //
+      width: 230px;
+      height: 320px;
+    }
+    .title {
+      grid-column: 2 / 4;
+      padding-left: 6px;
+      //
+      font-size: $font-title-size;
+      color: $title-color;
+      padding-left: 6px;
+    }
+    .movieInfo {
+      grid-column: 2 / 4;
+      padding-left: 6px;
+      //
+
+      flex-direction: column;
+      height: $modal-height;
+
+      .content {
+        margin: 12px auto;
+      }
+    }
+    .summaryInfo {
+      grid-column: 2 / 4;
+      padding-left: 6px;
+
+      dt {
+        width: 50px;
+        float: left;
+        margin-right: 45px;
+      }
+      dd {
+        font-weight: 500;
+        svg {
+          color: gold;
+          font-size: 14px;
+          transform: translateY(2px);
+          margin-right: 3px;
+        }
+      }
+    }
+    .icons {
+      grid-column: 2 / 4;
+      padding-left: 6px;
+      //
+      display: flex;
+      flex-direction: row;
+      color: $title-color;
+      .likeBtn {
+        @include flexColCenter();
+        font-size: 8px;
+        color: $common-color;
+
+        .FaHeart,
+        .FaRegHeart {
+          @include iconSize();
+        }
+        .FaHeart {
+          color: #f2275d;
+        }
+      }
+      .shareBtn {
+        @include flexColCenter();
+        font-size: 8px;
+        color: $common-color;
+        .MdIosShare {
+          @include iconSize();
+        }
+      }
+    }
+  }
+}

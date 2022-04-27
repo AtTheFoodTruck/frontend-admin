@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, ListGroup } from "react-bootstrap";
 import { AiFillPlusCircle, AiFillEdit } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
-
-const MenuListEL = ({ item }) => {
+import Modal from "./Modal";
+const MenuListEL = ({ item, handlePlusModal, handleMinusModal }) => {
   return (
     <>
       <ListGroup.Item className="d-inline-flex align-items-center">
@@ -12,9 +12,17 @@ const MenuListEL = ({ item }) => {
         {/* <Col>{item.description}</Col> */}
         <Col>{item.price}</Col>
         {/* <Col>등록</Col> */}
-        <Col><AiFillPlusCircle/></Col>
-        <Col><AiFillEdit/></Col>
-        <Col><TiDelete/></Col>
+        <Col>
+          <AiFillPlusCircle type="button" onClick={handlePlusModal} />
+        </Col>
+
+        <Col>
+          <AiFillEdit type="button" onClick={handleMinusModal} />
+        </Col>
+
+        <Col>
+          <TiDelete type="button" />
+        </Col>
         {/* <Col>{item.itemImg}</Col> */}
         {/* <img src={item.itemImg}></img> */}
       </ListGroup.Item>

@@ -3,7 +3,7 @@ import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import MenuListEL from "./MenuListEL";
-
+import Modal from "./Modal";
 const MenuList = () => {
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
@@ -12,6 +12,8 @@ const MenuList = () => {
   };
   const [menulist, setMenuList] = useState([]);
 
+  //
+  //
   async function getMenuList() {
     const foodtruck = await axios
       .get(
@@ -31,6 +33,25 @@ const MenuList = () => {
     getMenuList();
   }, []);
 
+  //modal
+  const [openPlusModal, setOpenPlusModal] = useState(false);
+  const [openMinusModal, setOpenMinusModal] = useState(false);
+  //handleModal
+  const handlePlusModal = () => {
+    if (!openPlusModal) {
+      //Modal On
+      console.log("openPlusModal");
+    }
+    setOpenPlusModal(!openPlusModal);
+  };
+  const handleMinusModal = () => {
+    if (!openMinusModal) {
+      //Modal On
+      console.log("openMinusModal");
+    }
+    setOpenMinusModal(!openMinusModal);
+  };
+
   return (
     <ReceiveOrderWrapper>
       <Container className="text-center">
@@ -49,10 +70,19 @@ const MenuList = () => {
         </ListGroup>
         <ListGroup>
           {menulist.map((item) => {
-            return <MenuListEL key={item.itemId} item={item} />;
+            return (
+              <MenuListEL
+                key={item.itemId}
+                item={item}
+                handlePlusModal={handlePlusModal}
+                handleMinusModal={handleMinusModal}
+              />
+            );
           })}
         </ListGroup>
       </Container>
+      {openPlusModal && <Modal handleModal={handlePlusModal} />}
+      {openMinusModal && <Modal handleModal={handleMinusModal} />}
     </ReceiveOrderWrapper>
   );
 };
