@@ -5,6 +5,7 @@ import ImgUpload from './ImgUpload';
 import AWS from 'aws-sdk';
 
 const MenuRegister = () => {
+
   // 유저 정보
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
@@ -12,20 +13,88 @@ const MenuRegister = () => {
     Authorization: `Bearer ${authorization}`,
   };
 
+  // 변수 초기화
   const [inputs, setInputs] = useState({
     menuname: "",
     description: "",
     price: "",
   });
-
   const { menuname, description, price } = inputs; // 비구조화 할당을 통해 값 추출
+  const [imgURL, setImgURL] = useState(''); // image 상태
+  const [fileURL, setFileURL] = useState('img/default_image.png'); //미리보기
+  const [reviewLocation, setReviewLocation] = useState('');
+  const [loaded, setLoaded] = useState(false);
 
+  // InputBox Change Event
   const onChange = (e) => {
-    const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    const { value, name } = e.target;
     setInputs({
-      ...inputs, // 기존의 input 객체를 복사한 뒤
-      [name]: value, // name 키를 가진 값을 value 로 설정
+      ...inputs,
+      [name]: value,
     });
+  };
+
+  // 저장 후 텍스트 ""로 초기화
+  const onReset = () => {
+    setInputs({
+      ...inputs,
+      menuname: "",
+      description: "",
+      price: ""
+    })
+  };
+
+  // S3 환경 설정
+  AWS.config.update({
+    accessKeyId: process.env.REACT_APP_ACCESS_KEY,
+    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+    region: process.env.REACT_APP_REGION,
+  });
+
+  // img input
+  const handleImgInput = (e) => {
+    e.preventDefault();
+    const fileReader = new FileReader();
+    const file = e.target.files[0];
+    if (file) {
+      setLoaded('loading');
+      fileReader.readAsDataURL(file);
+    }
+    fileReader.onload = () => {
+      //미리보기
+      setFileURL(fileReader.result);
+      //s3
+      setImgURL(e.target.files[0]);
+      setLoaded(true);
+    };
+  };
+
+  // 이미지 업로드 진행
+  const handleImgUpload = (e) => {
+    const file = e.target.files[0];
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        ACL: 'public-read',
+        Body: file,
+        Bucket: process.env.REACT_APP_S3_BUCKET,
+        Key: 'menu/' + file.name,
+      },
+    });
+
+    const promise = upload.promise();
+
+    promise.then(
+      function (data) {
+        setReviewLocation(data.Location);
+        console.log(data.Location + '업로드 성공');
+      },
+
+      function (err) {
+        console.log(err);
+        console.log('env, ', process.env.AWS_CONFIG);
+        return console.log('오류가 발생했습니다');
+      }
+    );
   };
 
   // 메뉴 등록 api 
@@ -34,12 +103,12 @@ const MenuRegister = () => {
       .post(
         `http://localhost:8000/item-service/items/v1/owner/item`,
         {
-          // user_id: 34,
+          // user_id: 2,
           user_id: userId,
           item_name: menuname,
           description: description,
           price: price,
-          item_img_url: "img/food1.jpg",
+          item_img_url: reviewLocation,
         },
         {
           headers: headers
@@ -49,6 +118,7 @@ const MenuRegister = () => {
         if( res.data.result === "success") {
           console.log(res);
           alert("메뉴 등록 성공");
+          onReset()
         }else {
           alert("메뉴 등록에 실패하였습니다. 관리자에게 문의해주세여");
         }
@@ -59,15 +129,15 @@ const MenuRegister = () => {
   return (
     <Container className="text-center">
       <p className="fs-1">메뉴관리</p>
-      {menuname} / {price} / {description}
       <Row className="d-flex align-items-center">
         <Col>
-          <div className="form-group ">
-            <label htmlFor="formFile" className="form-label mt-4">
-              사진
-            </label>
-            <input className="form-control" type="file" id="formFile" />
-          </div>
+            <ImgUpload
+              setState={setInputs}
+              loaded={loaded}
+              fileURL={fileURL}
+              handleImgInput={handleImgInput}
+              handleImgUpload={handleImgUpload}
+            />
         </Col>
 
         <Col>

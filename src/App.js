@@ -9,7 +9,14 @@ import DashBoard from './components/DashBoard';
 
 function App() {
   return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<DashBoard />} />
+        <Route path="/login" element={<AdminLogin />} />
         <Route path="/menu-register" element={<MenuRegister />} />
+        <Route path="/receive-order" element={<ReceiveOrder />} />
+      </Route>
+    </Routes>
   );
 }
 
