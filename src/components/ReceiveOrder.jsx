@@ -16,7 +16,9 @@ const ReceiveOrder = () => {
   // 변수 초기화
   const [orderList, setOrderList] = useState([])    // 주문내역
   const [orderItems, setOrderItems] = useState([])  // 주문내역의 주문 아이템 목록
-
+  const [acceptType, setAcceptType] = useState(false);
+  const [rejectType, setRejectType] = useState(true);
+  const [completeType, setCompleteType] = useState(true);
   // 유저 정보
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
@@ -29,8 +31,69 @@ const ReceiveOrder = () => {
     getOrderList();
   }, []);
 
+  // 주문 접수 클릭 이벤트
+  async function acceptOrder () {
+    await axios.patch(`http://localhost:8000/order-service/orders/v1/owner/accept`, {
+      order_id: 1
+    },{
+      headers
+    }
+    ).then(res => {
+      console.log(res);}
+    ).catch(err => {
+      console.log(err);
+    })
+
+    setAcceptType(true);
+  }
+
+  // 주문 거절 클릭 이벤트
+  async function rejectOrder () {
+    await axios.patch(`http://localhost:8000/order-service/orders/v1/owner/reject`, {
+      order_id: 1
+    },{
+      headers
+    }
+    ).then(res => {
+      console.log(res);
+      if (res.data.result === 'success') {
+        return alert(res.data.message)
+      }else {
+        return alert("오류가 발생하였습니다. 관리자에게 문의하세요")
+      }
+    }
+    ).catch(err => {
+      console.log(err);
+    })
+
+    setRejectType(true);
+  }
+
+  // 조리 완료 클릭 이벤트
+  async function completeOrder () {
+    await axios.patch(`http://localhost:8000/order-service/orders/v1/owner/complete`, {
+      order_id: 1
+    },{
+      headers
+    }
+    ).then(res => {
+      console.log(res);
+      if (res.data.result === 'success') {
+        return alert(res.data.message)
+      }else {
+        return alert("오류가 발생하였습니다. 관리자에게 문의하세요")
+      }
+    }
+    ).catch(err => {
+      console.log(err);
+    })
+    setCompleteType(true);
+  }
+
+  // 주문 접수 내역 조회
   async function getOrderList() {
-    const foodtruck = await axios
+    // const foodtruck = await axios
+    await axios
       .post(
         // `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
         `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
@@ -71,25 +134,16 @@ const ReceiveOrder = () => {
           </Col>
         </Row>
         <ListGroup>
-        {orderList.map(orderListitem => {
-              return <ReceiveOrderList key={orderListitem.orderId} orderListitem={orderListitem} />;
-            })}
-          {/* <ListGroup.Item className="d-inline-flex align-items-center"> */}
-            
-            {/* <Col>orderID</Col>
-            <Col>orderDate</Col>
-            <Col>menuName</Col>
-            <Col>orderState</Col>
-            <Col>
-              <Button>수락</Button>
-            </Col>
-            <Col>
-              <Button>거절</Button>
-            </Col>
-            <Col>
-              <Button>조리완료</Button>
-            </Col> */}
-          {/* </ListGroup.Item> */}
+            {orderList.map( (orderListItem) => (
+              <ReceiveOrderList 
+                key={orderListItem.orderId} 
+                orderListItem={orderListItem} 
+                orderItems={orderItems}
+                acceptOrder={acceptOrder}
+                rejectOrder={rejectOrder}
+                completeOrder={completeOrder}
+              />
+            ))}
         </ListGroup>
       </Container>
     </ReceiveOrderWrapper>

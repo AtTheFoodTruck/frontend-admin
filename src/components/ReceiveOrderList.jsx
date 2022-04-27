@@ -1,103 +1,85 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Container, ListGroup, Col, Button, Row } from 'react-bootstrap';
+import styledComponents from "styled-components";
 // import OrderPage from "../OrderPage/OrderPage";
 // import { useNavigate } from "react-router-dom";
+import "./style.css";
 
 const ImgSize = styled.img`
   height: 15rem;
   object-fit: cover;
 `;
 
-const ReceiveOrderList = ({ orderListitem }) => {
+const ReceiveOrderList = ({ orderListItem, orderItems, acceptOrder, rejectOrder, completeOrder }) => {
 
-    const orderId = orderListitem.orderId
-    const orderDate = orderListitem.orderTime
-    const orderState = orderListitem.orderStatus
-    const userName = orderListitem.userName
-//   const navigate = useNavigate();
+    const orderId = orderListItem.orderId
+    const orderDate = orderListItem.orderTime
+    const orderState = orderListItem.orderStatus
+    const userName = orderListItem.userName
+    // 주문 상태 : ORDER, ACCEPTED, REJECTED, COMPLETED
+    const flag = ["ORDER", "ACCEPTED", "REJECTED", "COMPLETED"];
+    const [acceptType, setAcceptType] = useState(false);
+    const [rejectType, setRejectType] = useState(false);
+    const [completeType, setCompleteType] = useState(false);
+    let newArray = [];
 
-//   const handleClick = () => {
-//     navigate("/order-page", {
-//       state: {
-//         storeId: item.storeId,
-//       },
-//     });
-//   };
+
+    useEffect( () => {
+        if( orderListItem.orderStatus === "ORDER"){
+            setAcceptType(false);
+            setRejectType(false);
+            setCompleteType(true);
+        } else if( orderListItem.orderStatus === "ACCEPTED"){
+            setAcceptType(true);
+            setRejectType(true);
+            setCompleteType(false);
+        } else { // 주문 거절 상태, 조리 완료 상태는 모든 버튼 비활성화
+            setAcceptType(true);
+            setRejectType(true);
+            setCompleteType(true);
+        }
+    }, [])
+
+    // itemName
+    for( let i=0; i<orderListItem.orderItems.length; i++ ) {
+        newArray = newArray.concat(orderListItem.orderItems[i].itemName);
+        
+        console.log(newArray);
+    }
+    console.log(newArray.join())
+
+    
 
   return (
     // <ListGroup>
     // <ListGroup.Item className="d-inline-flex align-items-center">
     <ListGroup.Item className="d-inline-flex align-items-center">
-            {/* <Col>{orderListitem.orderId}</Col> */}
-            <Col>{orderId}</Col>
-            <Col>{orderDate}</Col>
-            <Col>{orderState}</Col>
-            <Col>{userName}</Col>
-            <Col>{orderListitem.orderItems[0].itemName}</Col>
-            <Col>
-              <Button>수락</Button>
-            </Col>
-            <Col>
-              <Button>거절</Button>
-            </Col>
-            <Col>
-              <Button>조리완료</Button>
-            </Col>
-       </ListGroup.Item>
-    // </ListGroup.Item>
-//   </ListGroup>
-
-    // <motion.section
-    //   layout
-    //   animate={{ opacity: 1 }}
-    //   initial={{ opacity: 0 }}
-    //   exit={{ opacity: 0 }}
-    //   className="py-2 "
-    // >
-    //   <div className="col mb-5 ">
-    //     <div className="card h-100 ">
-    //       <ImgSize
-    //         className="card-img-top img-fluid"
-    //         src="/img/pizza.jpg"
-    //         // src={item.storeImgUrl}
-    //         alt="..."
-    //       />
-    //       <div className="card-body p-4">
-    //         <div className="text-center">
-    //           {/* <!-- Product name--> */}
-    //           <h5 className="fw-bolder">{item.storeName}</h5>
-    //           <div className="d-flex justify-content-center small  mb-2">
-    //             <div className="bi-star-fill text-warning"></div>&ensp;
-    //             {item.rateAvg}
-    //           </div>
-    //           {/* <div>store Id = {item.storeId}</div> */}
-    //         </div>
-    //       </div>
-    //       {/* <!-- Product actions--> */}
-    //       <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-    //         <div className="text-center">
-    //           <button
-    //             className="btn btn-outline-dark mt-auto"
-    //             cvariant="outline-secondary"
-    //             onClick={handleClick}
-    //           >
-    //             주문하기
-    //           </button>
-    //           {/* <Link
-    //             className="btn btn-outline-dark mt-auto"
-    //             to={"/order-page/" + item.storeId}
-    //           >
-    //             주문하기
-    //           </Link>
-    //           <Button cvariant="outline-secondary" onClick={handleClick}>
-    //             주문하기
-    //           </Button> */}
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </motion.section>
+        {/* <Col>{orderListItem.orderId}</Col> */}
+        <Col>{orderId}</Col>
+        <Col>{orderDate}</Col>
+        <Col>{orderState}</Col>
+        <Col>{userName}</Col>
+        <Col id="menu_name">{newArray.join()}</Col>
+        <Col>
+            {acceptType 
+                ? <Button disabled={true} onClick={acceptOrder}>주문수락</Button>
+                : <Button disabled={false} onClick={acceptOrder}>주문수락</Button>
+            }
+        </Col>
+        <Col>
+            {rejectType
+                ? <Button disabled={true} onClick={rejectOrder}>주문거절</Button>
+                : <Button disabled={false} onClick={rejectOrder}>주문거절</Button>
+            }
+        </Col>
+        <Col>
+            {completeType
+                ? <Button disabled={true}  onClick={completeOrder}>조리완료</Button>
+                : <Button disabled={false} onClick={completeOrder}>조리완료</Button>
+            }
+        </Col>
+    </ListGroup.Item>
   );
 };
 
