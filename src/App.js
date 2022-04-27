@@ -1,18 +1,15 @@
-import { Container } from "react-bootstrap";
-import "bootswatch/dist/sketchy/bootstrap.css";
-
-import "./App.css";
-import OrderHistory from "./components/OrderHistory";
-import MenuRegister from "./components/DashBoard/MenuRegister/MenuRegister";
-import Ex from "./components/DashBoard/MenuRegister/Ex";
+import 'bootswatch/dist/sketchy/bootstrap.css';
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import MenuRegister from './components/MenuRegister';
+import ReceiveOrder from './components/ReceiveOrder';
+import AdminLogin from './components/AdminLogin';
+import Layout from './components/Layout';
+import DashBoard from './components/DashBoard';
 
 function App() {
   return (
-    <Container>
-      <MenuRegister />
-      {/* <OrderHistory /> */}
-      <Ex />
-    </Container>
+        <Route path="/menu-register" element={<MenuRegister />} />
   );
 }
 
