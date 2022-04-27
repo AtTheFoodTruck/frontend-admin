@@ -10,6 +10,7 @@ RUN yarn
 
 # 파일 모두 복사
 COPY . .
+RUN yarn
 
 # 리액트 빌드
 RUN yarn run build
