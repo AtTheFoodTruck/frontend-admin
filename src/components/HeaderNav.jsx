@@ -16,7 +16,6 @@ const NavR = styled.div`
 
 const HeaderNav = () => {
   let isAuthorized = localStorage.getItem('Authorization');
-  console.log("isAuthorized " + isAuthorized);
 
   const onClickLogout = () => {
     localStorage.removeItem('Authorization');
