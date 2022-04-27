@@ -7,7 +7,7 @@ WORKDIR /app/frontend
 # 패키지 다운로드
 COPY package.json .
 RUN npm install
-RUN npm --version
+
 # 파일 모두 복사
 COPY . .
 
