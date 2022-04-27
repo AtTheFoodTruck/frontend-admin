@@ -23,6 +23,32 @@ const InputContainer = styled.form`
   }
 `;
 
+const LoginWrapper = styled.div`
+  position: absolute;
+  align-items: center;
+  width: 20em;
+  top: 30%;
+  left: 43%;
+  border: 1px white solid;
+
+  h1 {
+    font-size: 70px;
+    text-align: center;
+  }
+
+  .email {
+    text-align-last: left;
+  }
+  .password {
+    margin-top: 0.5em;
+    text-align-last: left;
+  }
+  .btn {
+    margin-top: 0.5em;
+    width: 100%;
+  }
+`;
+
 const AdminLogin = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
@@ -94,7 +120,7 @@ const AdminLogin = () => {
 
   return (
     <LoginWrapper>
-      <h1>Admin Login</h1>
+      <h1>Login</h1>
 
       <div className="email">
         <div className="form-floating">
@@ -138,26 +164,5 @@ const AdminLogin = () => {
     </LoginWrapper>
   );
 };
-
-const LoginWrapper = styled.div`
-  position: absolute;
-  align-items: center;
-  width: 20%;
-  top: 35%;
-  left: 43%;
-  border: 1px white solid;
-  h1 {
-    font-size: 70px;
-    margin-left: 12%;
-  }
-
-  button {
-    width: 20%;
-    margin-left: 40%;
-    margin-top: 25px;
-    font-weight: bold;
-    font-size: 0.95rem;
-  }
-`;
 
 export default AdminLogin;
