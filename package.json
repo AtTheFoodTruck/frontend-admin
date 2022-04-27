@@ -13,10 +13,12 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.3.0",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "startbootstrap-sb-admin": "^7.0.5",
     "styled-components": "^5.3.5",
+    "util": "^0.12.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

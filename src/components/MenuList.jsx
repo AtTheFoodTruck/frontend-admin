@@ -41,6 +41,9 @@ const MenuList = () => {
             <Col>이름</Col>
             {/* <Col>설명</Col> */}
             <Col>가격</Col>
+            <Col>등록</Col>
+            <Col>수정</Col>
+            <Col>삭제</Col>
             {/* <Col>itemImg</Col> */}
           </ListGroup.Item>
         </ListGroup>
