@@ -6,6 +6,7 @@ import ReceiveOrder from './components/ReceiveOrder';
 import AdminLogin from './components/AdminLogin';
 import Layout from './components/Layout';
 import DashBoard from './components/DashBoard';
+import StoreRegister from './components/StoreRegister';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<DashBoard />} />
         <Route path="/login" element={<AdminLogin />} />
         <Route path="/menu-register" element={<MenuRegister />} />
+        <Route path="/store-register" element={<StoreRegister />} />
         <Route path="/receive-order" element={<ReceiveOrder />} />
       </Route>
     </Routes>

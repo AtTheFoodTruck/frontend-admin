@@ -29,6 +29,13 @@ const DashBoard = () => {
               </Button>
             </Link>
           </Col>
+          <Col>
+            <Link to="/store-register">
+              <Button style={{ width: '18rem' }}>
+                <p className="fs-1">가게정보 등록</p>
+              </Button>
+            </Link>
+          </Col>
         </Row>
       </Container>
     </DashBoardWrapper>
