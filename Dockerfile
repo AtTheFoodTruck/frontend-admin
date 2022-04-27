@@ -6,14 +6,17 @@ WORKDIR /app/frontend
 
 # 패키지 다운로드
 COPY package.json .
-RUN npm install
+RUN yarn
+RUN yarn add aws-sdk
+RUN yarn add util
 
 # 파일 모두 복사
 COPY . .
 
+
 # 리액트 빌드
-RUN npm install -g npm@8
-RUN npm run build
+RUN yarn run build
+
 
 FROM nginx:latest
 # nginx의 기본 설정을 삭제하고 앱 소스에서 설정한 파일을 복사
