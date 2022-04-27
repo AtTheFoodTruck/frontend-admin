@@ -23,10 +23,10 @@ const LoginWrapper = styled.div`
 const AdminLogin = () => {
   const [inputId, setInputId] = useState('');
   const [inputPw, setInputPw] = useState('');
-  // let [accessToken, setAccessToken] = useState('');
-  // let [refreshToken, setRefreshToken] = useState('');
-  // let [userId, setUserId] = useState('');
-  // const navigate = useNavigate();
+  let [accessToken, setAccessToken] = useState('');
+  let [refreshToken, setRefreshToken] = useState('');
+  let [userId, setUserId] = useState('');
+  const navigate = useNavigate();
 
   const [mailMessage, setMailMessage] = useState('Email');
   const [passwordMessage, setPasswordMessage] = useState('Password');
@@ -41,14 +41,11 @@ const AdminLogin = () => {
     console.log(e.target.value);
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem('Authorization', accessToken);
-  //   localStorage.setItem('userId', userId);
-  //   localStorage.setItem('refreshToken', refreshToken);
-  //   console.log('accessToken : ' + accessToken);
-  //   console.log('userId : ' + userId);
-  //   console.log('refreshToken : ' + refreshToken);
-  // }, [accessToken, userId, refreshToken]);
+  useEffect(() => {
+    localStorage.setItem('Authorization', accessToken);
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('refreshToken', refreshToken);
+  }, [accessToken, userId, refreshToken]);
 
   async function onClickLogin(e) {
     e.preventDefault();
@@ -71,6 +68,7 @@ const AdminLogin = () => {
               setRefreshToken(response.data.data.refreshToken);
               setUserId(response.data.data.userId);
               navigate('/', { replace: true });
+              document.location.reload();
               console.log(response);
             } else if (response.data.message === 'Bad credentials') {
               setMailMessage('로그인 실패');
@@ -87,7 +85,9 @@ const AdminLogin = () => {
           .catch(function (error) {
             console.log(error);
           });
-  }
+        
+  }}
+  
 
   return (
     <LoginWrapper>
