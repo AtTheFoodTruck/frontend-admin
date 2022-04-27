@@ -1,22 +1,25 @@
-import { Button, Container } from 'react-bootstrap';
+// import { Button, Container } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const LoginWrapper = styled.div`
-  position: absolute;
-  align-items: center;
-  width: 55%;
-  top: 20%;
-  left: 23%;
-  border: 1px white solid;
-  header {
-    border: 1px white solid;
+const InputContainer = styled.form`
+  padding-top: 250px;
+  width: 20em;
+  margin: auto;
+  text-align-last: center;
+
+  .email {
+    text-align-last: left;
   }
-  button {
-    font-weight: bold;
-    font-size: 0.95rem;
+  .password {
+    margin-top: 0.5em;
+    text-align-last: left;
+  }
+  .btn {
+    margin-top: 0.5em;
+    width: 100%;
   }
 `;
 
@@ -91,8 +94,7 @@ const AdminLogin = () => {
   
 
   return (
-    <LoginWrapper>
-      <Container>
+    <InputContainer>
         <h1>Login</h1>
 
         <div className="email">
@@ -134,8 +136,7 @@ const AdminLogin = () => {
         >
           로그인
         </button>
-      </Container>
-    </LoginWrapper>
+    </InputContainer>
   );
 };
 
