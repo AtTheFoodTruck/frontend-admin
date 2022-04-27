@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const NavR = styled.div`
   display: flex;
@@ -15,12 +15,12 @@ const NavR = styled.div`
 `;
 
 const HeaderNav = () => {
-  let isAuthorized = localStorage.getItem('Authorization');
+  let isAuthorized = localStorage.getItem("Authorization");
 
   const onClickLogout = () => {
-    localStorage.removeItem('Authorization');
-    localStorage.removeItem('userId');
-    window.location.replace('/');
+    localStorage.removeItem("Authorization");
+    localStorage.removeItem("userId");
+    window.location.replace("/");
   };
 
   return (
@@ -35,6 +35,11 @@ const HeaderNav = () => {
         <li className="nav-item">
           <Link className="nav-link" to="/menu-register">
             메뉴등록
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/menu-list">
+            메뉴 목록
           </Link>
         </li>
 
