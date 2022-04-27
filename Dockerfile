@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # 리액트 빌드
-RUN npm install -g npm@
+RUN npm install -g npm@8
 RUN npm run build
 
 FROM nginx:latest
