@@ -7,9 +7,10 @@ const MenuListEL = ({ item }) => {
       <ListGroup.Item className="d-inline-flex align-items-center">
         <Col>{item.itemId}</Col>
         <Col>{item.itemName}</Col>
-        <Col>{item.description}</Col>
+        {/* <Col>{item.description}</Col> */}
         <Col>{item.price}</Col>
-        <Col>{item.itemImg}</Col>
+        {/* <Col>{item.itemImg}</Col> */}
+        {/* <img src={item.itemImg}></img> */}
       </ListGroup.Item>
     </>
   );

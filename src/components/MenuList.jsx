@@ -37,11 +37,11 @@ const MenuList = () => {
         <p className="fs-1">메뉴목록</p>
         <ListGroup>
           <ListGroup.Item className="d-inline-flex align-items-center">
-            <Col>itemId</Col>
-            <Col>itemName</Col>
-            <Col>description</Col>
-            <Col>price</Col>
-            <Col>itemImg</Col>
+            <Col>메뉴번호</Col>
+            <Col>이름</Col>
+            {/* <Col>설명</Col> */}
+            <Col>가격</Col>
+            {/* <Col>itemImg</Col> */}
           </ListGroup.Item>
         </ListGroup>
         <ListGroup>
