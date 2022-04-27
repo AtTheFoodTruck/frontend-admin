@@ -160,7 +160,7 @@ const MenuRegister = () => {
             id="menuPrice"
           />
         </Col>
-        <Col>
+        {/* <Col>
           <label htmlFor="description">설명</label>
           <input
             className="form-control"
@@ -169,7 +169,7 @@ const MenuRegister = () => {
             value={description}
             id="description"
           />
-        </Col>
+        </Col> */}
         <Col>
           <Button onClick={postMenuPush}>등록</Button>
         </Col>
