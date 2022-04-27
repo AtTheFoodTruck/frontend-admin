@@ -5,23 +5,21 @@ import AdminLogin from "./components/AdminLogin";
 import DashBoard from "./components/DashBoard";
 import Layout from "./components/Layout";
 import MenuList from "./components/MenuList";
-// import MenuRegister from "./components/MenuRegister";
+import MenuRegister from "./components/MenuRegister";
 import ReceiveOrder from "./components/ReceiveOrder";
 import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <>
-      <Sidebar>
-        <Routes>
-          <Route path="/" element={<DashBoard />} />
-          <Route path="/login" element={<AdminLogin />} />
-          {/* <Route path="/menu-register" element={<MenuRegister />} /> */}
-          <Route path="/receive-order" element={<ReceiveOrder />} />
-          <Route path="/menu-list" element={<MenuList />} />
-        </Routes>
-      </Sidebar>
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<DashBoard />} />
+        <Route path="/login" element={<AdminLogin />} />
+        <Route path="/menu-register" element={<MenuRegister />} />
+        <Route path="/receive-order" element={<ReceiveOrder />} />
+        <Route path="/menu-list" element={<MenuList />} />
+      </Route>
+    </Routes>
   );
 }
 

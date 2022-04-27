@@ -1,8 +1,27 @@
-import { Button, Container } from "react-bootstrap";
+// import { Button, Container } from 'react-bootstrap';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+
+const InputContainer = styled.form`
+  padding-top: 250px;
+  width: 20em;
+  margin: auto;
+  text-align-last: center;
+
+  .email {
+    text-align-last: left;
+  }
+  .password {
+    margin-top: 0.5em;
+    text-align-last: left;
+  }
+  .btn {
+    margin-top: 0.5em;
+    width: 100%;
+  }
+`;
 
 const AdminLogin = () => {
   const [inputId, setInputId] = useState("");
@@ -74,51 +93,49 @@ const AdminLogin = () => {
   }
 
   return (
-    <LoginWrapper>
-      <Container>
-        <h1>Admin Login</h1>
+    <InputContainer>
+      <h1>Admin Login</h1>
 
-        <div className="email">
-          <div className="form-floating">
-            <input
-              type="text"
-              name="input_id"
-              value={inputId}
-              className="form-control"
-              id="input_id"
-              placeholder="아이디를 입력하세요."
-              onChange={handleInputId}
-            />
-            <label id="input_id_label" for="floatingInput">
-              {mailMessage}
-            </label>
-          </div>
+      <div className="email">
+        <div className="form-floating">
+          <input
+            type="text"
+            name="input_id"
+            value={inputId}
+            className="form-control"
+            id="input_id"
+            placeholder="아이디를 입력하세요."
+            onChange={handleInputId}
+          />
+          <label id="input_id_label" for="floatingInput">
+            {mailMessage}
+          </label>
         </div>
+      </div>
 
-        <div className="password">
-          <div className="form-floating">
-            <input
-              type="password"
-              name="input_pw"
-              value={inputPw}
-              className="form-control mt-3"
-              id="input_pw"
-              placeholder="비밀번호를 입력하세요."
-              onChange={handleInputPw}
-            />
-            <label for="floatingPassword">{passwordMessage}</label>
-          </div>
+      <div className="password">
+        <div className="form-floating">
+          <input
+            type="password"
+            name="input_pw"
+            value={inputPw}
+            className="form-control mt-3"
+            id="input_pw"
+            placeholder="비밀번호를 입력하세요."
+            onChange={handleInputPw}
+          />
+          <label for="floatingPassword">{passwordMessage}</label>
         </div>
+      </div>
 
-        <button
-          type="submit"
-          className="btn btn-lg btn-outline-secondary"
-          onClick={onClickLogin}
-        >
-          Login
-        </button>
-      </Container>
-    </LoginWrapper>
+      <button
+        type="submit"
+        className="btn btn-lg btn-outline-secondary"
+        onClick={onClickLogin}
+      >
+        Login
+      </button>
+    </InputContainer>
   );
 };
 
