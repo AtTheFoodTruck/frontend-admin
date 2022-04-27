@@ -5,18 +5,18 @@ import MenuRegister from './components/MenuRegister';
 import ReceiveOrder from './components/ReceiveOrder';
 import AdminLogin from './components/AdminLogin';
 import Layout from './components/Layout';
+import DashBoard from './components/DashBoard';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<AdminLogin />} />
-      <Route path="/menu-register" element={<MenuRegister />} />
-      <Route path="/receive-order" element={<ReceiveOrder />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<DashBoard />} />
+        <Route path="/login" element={<AdminLogin />} />
+        <Route path="/menu-register" element={<MenuRegister />} />
+        <Route path="/receive-order" element={<ReceiveOrder />} />
+      </Route>
     </Routes>
-    // <Container>
-    //   <MenuRegister />
-    //   <ReceiveOrder />
-    // </Container>
   );
 }
 
