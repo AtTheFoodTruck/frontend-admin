@@ -7,11 +7,12 @@ WORKDIR /app/frontend
 # 패키지 다운로드
 COPY package.json .
 RUN yarn
+RUN yarn add aws-sdk
+RUN yarn add util
 
 # 파일 모두 복사
 COPY . .
-RUN yarn add aws-sdk
-RUN yarn add util
+
 
 # 리액트 빌드
 RUN yarn run build
