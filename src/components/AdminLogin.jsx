@@ -93,7 +93,7 @@ const AdminLogin = () => {
   }
 
   return (
-    <InputContainer>
+    <LoginWrapper>
       <h1>Admin Login</h1>
 
       <div className="email">
@@ -135,7 +135,7 @@ const AdminLogin = () => {
       >
         Login
       </button>
-    </InputContainer>
+    </LoginWrapper>
   );
 };
 

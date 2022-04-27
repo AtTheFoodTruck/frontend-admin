@@ -11,15 +11,17 @@ import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<DashBoard />} />
-        <Route path="/login" element={<AdminLogin />} />
-        <Route path="/menu-register" element={<MenuRegister />} />
-        <Route path="/receive-order" element={<ReceiveOrder />} />
-        <Route path="/menu-list" element={<MenuList />} />
-      </Route>
-    </Routes>
+    <>
+      <Sidebar>
+        <Routes>
+          <Route path="/" element={<DashBoard />} />
+          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/menu-register" element={<MenuRegister />} />
+          <Route path="/receive-order" element={<ReceiveOrder />} />
+          <Route path="/menu-list" element={<MenuList />} />
+        </Routes>
+      </Sidebar>
+    </>
   );
 }
 
