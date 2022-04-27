@@ -6,12 +6,13 @@ WORKDIR /app/frontend
 
 # 패키지 다운로드
 COPY package.json .
+RUN npm install -g npm@8.8.0
+
 
 # 파일 모두 복사
 COPY . .
 
 # 리액트 빌드
-RUN npm install -g npm@8.8.0
 RUN npm run build
 
 FROM nginx:latest
