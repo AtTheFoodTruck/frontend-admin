@@ -53,9 +53,10 @@ const MenuRegister = () => {
   const postMneuPush = async () => {
     await axios
       .post(
-        `http://localhost:8000/item-service/items/v1/owner/item`,
+        `http://localhost:8000/items/v1/owner/item`,
         {
           user_id: 34,
+          store_id: 40,
           item_name: menuname,
           description: description,
           price: price,
