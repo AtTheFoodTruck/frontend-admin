@@ -57,7 +57,7 @@ const MenuList = () => {
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
   align-items: center;
-  width: 100%;
+  width: 85%;
   top: 20%;
 `;
 
