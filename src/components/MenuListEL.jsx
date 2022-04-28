@@ -6,7 +6,7 @@ import { TiDelete } from "react-icons/ti";
 const MenuListEL = ({
   key,
   item,
-  handlePlusModal,
+  // handlePlusModal,
   handleMinusModal,
   deleteMenu,
 }) => {
@@ -17,9 +17,9 @@ const MenuListEL = ({
         <Col>{item.itemName}</Col>
         <Col>{item.price}</Col>
         {/* <Col>등록</Col> */}
-        <Col>
+        {/* <Col>
           <AiFillPlusCircle type="button" onClick={handlePlusModal} />
-        </Col>
+        </Col> */}
 
         <Col>
           <AiFillEdit type="button" onClick={handleMinusModal} />
