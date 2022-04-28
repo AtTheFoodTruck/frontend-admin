@@ -343,6 +343,7 @@ const OwnerRegister = () => {
           username: inputUsername,
           password: inputPw,
           phone_num: inputPhonenumber,
+          b_no: bNumber
         })
         .then(function (response) {
           if (response.data.result === "fail") {
