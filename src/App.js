@@ -8,6 +8,7 @@ import MenuList from "./components/MenuList";
 import MenuRegister from "./components/MenuRegister";
 import ReceiveOrder from "./components/ReceiveOrder";
 import OwnerRegister from "./components/OwnerRegister";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
