@@ -120,7 +120,7 @@ const AdminLogin = () => {
   }
 
   return (
-    <InputContainer>
+    <LoginWrapper>
       <h1>Login</h1>
 
       <div className="email">
@@ -163,9 +163,9 @@ const AdminLogin = () => {
         Login
       </button>
       <Link to="/owner-register">
-        <button className="btn btn-outline-secondary">Join</button>
+        <button className="btn btn-lg btn-outline-secondary">Join</button>
       </Link>
-    </InputContainer>
+    </LoginWrapper>
   );
 };
 
