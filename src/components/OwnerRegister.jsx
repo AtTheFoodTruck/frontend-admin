@@ -4,9 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 const MemberRegisterContainer = styled.div`
-  padding-top: 250px;
   width: 25em;
-  margin: auto;
 
   .container {
     display: grid;
