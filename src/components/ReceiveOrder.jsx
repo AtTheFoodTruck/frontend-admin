@@ -137,19 +137,19 @@ const ReceiveOrder = () => {
         <p className="fs-1">주문접수</p>
         <Row className=" mt-5">
           {/* <Col lg={3}></Col> */}
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>주문번호</h5>
           </Col>
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>주문시간</h5>
           </Col>
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>주문상태</h5>
           </Col>
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>주문자</h5>
           </Col>
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>아이템</h5>
           </Col>
         </Row>
