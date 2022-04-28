@@ -64,19 +64,19 @@ const ReceiveOrderList = ({ orderListItem, orderItems, acceptOrder, rejectOrder,
         <Col>
             {acceptType 
                 ? <Button disabled={true} onClick={acceptOrder}>주문수락</Button>
-                : <Button disabled={false} onClick={acceptOrder}>주문수락</Button>
+                : <Button disabled={false} onClick={acceptOrder(orderId)}>주문수락</Button>
             }
         </Col>
         <Col>
             {rejectType
                 ? <Button disabled={true} onClick={rejectOrder}>주문거절</Button>
-                : <Button disabled={false} onClick={rejectOrder}>주문거절</Button>
+                : <Button disabled={false} onClick={rejectOrder(orderId)}>주문거절</Button>
             }
         </Col>
         <Col>
             {completeType
                 ? <Button disabled={true}  onClick={completeOrder}>조리완료</Button>
-                : <Button disabled={false} onClick={completeOrder}>조리완료</Button>
+                : <Button disabled={false} onClick={completeOrder(orderId)}>조리완료</Button>
             }
         </Col>
     </ListGroup.Item>

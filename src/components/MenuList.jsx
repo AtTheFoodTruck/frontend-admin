@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
-import styled from 'styled-components';
-import axios from 'axios';
-import MenuListEL from './MenuListEL';
+import React, { useEffect, useState } from "react";
+import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import styled from "styled-components";
+import axios from "axios";
+import MenuListEL from "./MenuListEL";
+import Modal from "./Modal";
+import "./Modal.scss";
 
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
@@ -13,21 +15,24 @@ const ReceiveOrderWrapper = styled.div`
 
 // 메뉴 조회 api
 const MenuList = () => {
-  const authorization = localStorage.getItem('Authorization');
-  const userId = localStorage.getItem('userId');
+  const authorization = localStorage.getItem("Authorization");
+  const userId = localStorage.getItem("userId");
   const headers = {
     Authorization: `Bearer ${authorization}`,
   };
   const [menulist, setMenuList] = useState([]);
 
+  //
+  //
   async function getMenuList() {
     const foodtruck = await axios
       .get(
-        `http://localhost:8000/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
+        `https://apifood.blacksloop.com/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
+        // `http://localhost:8000/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
         { headers }
       )
       .then((res) => {
-        console.log('최초 렌더링 api 호출');
+        console.log("최초 렌더링 api 호출");
         setMenuList(res.data.data.itemsDto);
         console.log(res.data.data.itemsDto);
       })
@@ -36,19 +41,20 @@ const MenuList = () => {
 
   // 메뉴 삭제 api
   async function deleteMenu(itemId) {
-    if (window.confirm('메뉴를 삭제하시겠습니까?')) {
+    if (window.confirm("메뉴를 삭제하시겠습니까?")) {
       const data = {
         user_id: userId,
         item_id: itemId,
       };
       await axios
-        .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
+      .delete(`https://apifood.blacksloop.com/item-service/items/v1/owner/item`, {
+        // .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
           headers,
           data,
         })
         .then((res) => {
           console.log(res);
-          if (res.data.result === 'success') {
+          if (res.data.result === "success") {
             alert(res.data.message);
             document.location.reload();
           }
@@ -61,6 +67,25 @@ const MenuList = () => {
   useEffect(() => {
     getMenuList();
   }, []);
+
+  //modal
+  const [openPlusModal, setOpenPlusModal] = useState(false);
+  const [openMinusModal, setOpenMinusModal] = useState(false);
+  //handleModal
+  const handlePlusModal = () => {
+    if (!openPlusModal) {
+      //Modal On
+      console.log("openPlusModal");
+    }
+    setOpenPlusModal(!openPlusModal);
+  };
+  const handleMinusModal = () => {
+    if (!openMinusModal) {
+      //Modal On
+      console.log("openMinusModal");
+    }
+    setOpenMinusModal(!openMinusModal);
+  };
 
   return (
     <ReceiveOrderWrapper>
@@ -94,12 +119,18 @@ const MenuList = () => {
               <MenuListEL
                 key={item.itemId}
                 item={item}
+                handlePlusModal={handlePlusModal}
+                handleMinusModal={handleMinusModal}
                 deleteMenu={deleteMenu}
               />
             );
           })}
         </ListGroup>
       </Container>
+      {/* {openPlusModal && <Modal_copy handleModal={handlePlusModal} />}
+      {openMinusModal && <Modal_copy handleModal={handleMinusModal} />} */}
+      {openPlusModal && <Modal handleModal={handlePlusModal} />}
+      {openMinusModal && <Modal handleModal={handleMinusModal} />}
     </ReceiveOrderWrapper>
   );
 };

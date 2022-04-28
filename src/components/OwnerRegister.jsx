@@ -344,7 +344,7 @@ const OwnerRegister = () => {
         })
         .then(function (response) {
           if (response.data.result === "fail") {
-            alert(response.data.error[0].message);
+            alert(response.data.message);
           } else {
             alert("가입 성공");
             navigate("/login", { replace: true });

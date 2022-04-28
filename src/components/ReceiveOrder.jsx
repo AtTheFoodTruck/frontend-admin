@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Container, ListGroup, Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
-import axios from 'axios';
-import ReceiveOrderList from './ReceiveOrderList';
+import React, { useEffect, useState } from "react";
+import { Container, ListGroup, Col, Button, Row } from "react-bootstrap";
+import styled from "styled-components";
+import axios from "axios";
+import ReceiveOrderList from "./ReceiveOrderList";
 
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
@@ -18,25 +18,45 @@ const ReceiveOrder = () => {
   const [acceptType, setAcceptType] = useState(false);
   const [rejectType, setRejectType] = useState(true);
   const [completeType, setCompleteType] = useState(true);
+  const size = 10;
   // 유저 정보
-  const authorization = localStorage.getItem('Authorization');
-  const userId = localStorage.getItem('userId');
+  const authorization = localStorage.getItem("Authorization");
+  const userId = localStorage.getItem("userId");
   const headers = {
     Authorization: `Bearer ${authorization}`,
   };
+
+  // 날짜 함수
+  function leftPad(value) { 
+    if (value >= 10) { 
+      return value; 
+    } 
+    return `0${value}`; 
+  } 
+
+  // 날짜 함수
+  function toStringByFormatting(source, delimiter = '-') {
+     const year = source.getFullYear(); 
+     const month = leftPad(source.getMonth() + 1); 
+     const day = leftPad(source.getDate()); 
+     return [year, month, day].join(delimiter); 
+  }
 
   // 최초 페이지 렌더링
   useEffect(() => {
     getOrderList();
   }, []);
 
+  const nowDate = toStringByFormatting(new Date()); // ex)2021-04-24
+
   // 주문 접수 클릭 이벤트
-  async function acceptOrder() {
+  async function acceptOrder(orderId) {
     await axios
       .patch(
-        `http://localhost:8000/order-service/orders/v1/owner/accept`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
+        // `http://localhost:8000/order-service/orders/v1/owner/accept`,
         {
-          order_id: 1,
+          order_id: orderId,
         },
         {
           headers,
@@ -53,12 +73,13 @@ const ReceiveOrder = () => {
   }
 
   // 주문 거절 클릭 이벤트
-  async function rejectOrder() {
+  async function rejectOrder(orderId) {
     await axios
       .patch(
-        `http://localhost:8000/order-service/orders/v1/owner/reject`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
+        // `http://localhost:8000/order-service/orders/v1/owner/reject`,
         {
-          order_id: 1,
+          order_id: orderId,
         },
         {
           headers,
@@ -66,10 +87,10 @@ const ReceiveOrder = () => {
       )
       .then((res) => {
         console.log(res);
-        if (res.data.result === 'success') {
+        if (res.data.result === "success") {
           return alert(res.data.message);
         } else {
-          return alert('오류가 발생하였습니다. 관리자에게 문의하세요');
+          return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
         }
       })
       .catch((err) => {
@@ -80,12 +101,13 @@ const ReceiveOrder = () => {
   }
 
   // 조리 완료 클릭 이벤트
-  async function completeOrder() {
+  async function completeOrder(orderId) {
     await axios
       .patch(
-        `http://localhost:8000/order-service/orders/v1/owner/complete`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
+        // `http://localhost:8000/order-service/orders/v1/owner/complete`,
         {
-          order_id: 1,
+          order_id: orderId,
         },
         {
           headers,
@@ -93,10 +115,10 @@ const ReceiveOrder = () => {
       )
       .then((res) => {
         console.log(res);
-        if (res.data.result === 'success') {
+        if (res.data.result === "success") {
           return alert(res.data.message);
         } else {
-          return alert('오류가 발생하였습니다. 관리자에게 문의하세요');
+          return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
         }
       })
       .catch((err) => {
@@ -110,11 +132,11 @@ const ReceiveOrder = () => {
     // const foodtruck = await axios
     await axios
       .post(
-        // `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
-        `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
+        // `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
         {
-          user_id: 2,
-          order_date: '2022-04-25',
+          user_id: userId,
+          order_date: nowDate,
         },
         { headers }
       )
@@ -133,19 +155,19 @@ const ReceiveOrder = () => {
         <Row className=" mt-5">
           {/* <Col lg={3}></Col> */}
           <Col className="d-flex justify-content-center p-0">
-            <p className="fs-5">주문번호</p>
+            <h5>주문번호</h5>
           </Col>
           <Col className="d-flex justify-content-center p-0">
-            <p className="fs-5">주문시간</p>
+            <h5>주문시간</h5>
           </Col>
           <Col className="d-flex justify-content-center p-0">
-            <p className="fs-5">주문상태</p>
+            <h5>주문상태</h5>
           </Col>
           <Col className="d-flex justify-content-center p-0">
-            <p className="fs-5">주문자</p>
+            <h5>주문자</h5>
           </Col>
           <Col className="d-flex justify-content-center p-0">
-            <p className="fs-5">아이템</p>
+            <h5>아이템</h5>
           </Col>
         </Row>
         <ListGroup>

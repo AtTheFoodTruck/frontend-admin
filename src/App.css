@@ -71,3 +71,10 @@ main {
   white-space: nowrap;
   font-size: 25px;
 }
+
+.link-button-login {
+  width: 200px;
+}
+.link-button-logout {
+  cursor: pointer;
+}

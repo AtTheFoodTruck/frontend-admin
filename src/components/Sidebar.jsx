@@ -4,7 +4,8 @@ import { FaHome, FaUser, FaBars, FaFileAlt, FaSave } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
 import { BiAnalyse, BiSearch, BiCog } from "react-icons/bi";
 import { BsCartCheck } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
+import { GrLogout } from "react-icons/gr";
+import { Link, NavLink } from "react-router-dom";
 
 const routes = [
   {
@@ -12,11 +13,11 @@ const routes = [
     name: "Home",
     icon: <FaHome />,
   },
-  {
-    path: "/login",
-    name: "Login",
-    icon: <FaUser />,
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   icon: <FaUser />,
+  // },
   {
     path: "/receive-order",
     name: "Receive-order",
@@ -50,8 +51,15 @@ const routes = [
 ];
 
 const Sidebar = ({ children }) => {
+  let isAuthorized = localStorage.getItem("Authorization");
+  const onClickLogout = () => {
+    localStorage.removeItem("Authorization");
+    localStorage.removeItem("userId");
+    window.location.replace("/");
+  };
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
+
   const inputAnimation = {
     hidden: {
       width: 0,
@@ -133,6 +141,45 @@ const Sidebar = ({ children }) => {
               )}
             </AnimatePresence>
           </div>
+          <AnimatePresence>
+            {isOpen &&
+              (!isAuthorized ? (
+                <>
+                  <motion.div
+                    variants={showAnimation}
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    className="link link-button-login"
+                  >
+                    <FaUser className="icon" />
+
+                    <Link
+                      variants={showAnimation}
+                      className="link_text link-button-login"
+                      to="/login"
+                    >
+                      login
+                    </Link>
+                  </motion.div>
+                </>
+              ) : (
+                <>
+                  <motion.div
+                    variants={showAnimation}
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    onClick={onClickLogout}
+                    className="link link_text link-button-logout"
+                  >
+                    <GrLogout />
+                    logout
+                  </motion.div>
+                </>
+              ))}
+          </AnimatePresence>
+
           <section className="routes">
             {routes.map((route) => (
               <NavLink to={route.path} key={route.name} className="link">

@@ -4,9 +4,9 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 const Card = styled.div`
   img {
-    width: 230px;
+    width: 250px;
     height: 200px;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
   }
 `;
 
