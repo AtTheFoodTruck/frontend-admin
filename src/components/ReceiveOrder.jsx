@@ -25,6 +25,8 @@ const ReceiveOrder = () => {
     Authorization: `Bearer ${authorization}`,
   };
 
+  const size = 10;
+
   // 최초 페이지 렌더링
   useEffect(() => {
     getOrderList();
