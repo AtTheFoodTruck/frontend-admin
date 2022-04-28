@@ -5,6 +5,8 @@ import axios from "axios";
 import MenuListEL from "./MenuListEL";
 import Modal from "./Modal";
 import "./Modal.scss";
+import { AiFillPlusCircle, AiFillEdit } from "react-icons/ai";
+import { TiDelete } from "react-icons/ti";
 
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
@@ -13,7 +15,6 @@ const ReceiveOrderWrapper = styled.div`
   top: 20%;
 `;
 
-// 메뉴 조회 api
 const MenuList = () => {
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
@@ -21,9 +22,10 @@ const MenuList = () => {
     Authorization: `Bearer ${authorization}`,
   };
   const [menulist, setMenuList] = useState([]);
-
-  //
-  //
+// const arrayLength = 0;
+const [arrayLength, setArrayLength] = useState(0);
+  
+  // 메뉴 조회 api
   async function getMenuList() {
     const foodtruck = await axios
       .get(
@@ -66,6 +68,7 @@ const MenuList = () => {
   // 최초 페이지 렌더링
   useEffect(() => {
     getMenuList();
+    setArrayLength(menulist.length)
   }, []);
 
   //modal
@@ -90,7 +93,7 @@ const MenuList = () => {
   return (
     <ReceiveOrderWrapper>
       <Container className="text-center">
-        <p className="fs-1">메뉴목록</p>
+        <p className="fs-1">메뉴목록 <AiFillPlusCircle type="button" onClick={handlePlusModal} /> </p>
         <Row className="mt-5">
           <Col className="d-flex justify-content-center p-0">
             <p className="fs-5">메뉴번호</p>
@@ -102,9 +105,6 @@ const MenuList = () => {
             <p className="fs-5">가격</p>
           </Col>
           <Col className="d-flex justify-content-center p-0">
-            <p className="fs-5">등록</p>
-          </Col>
-          <Col className="d-flex justify-content-center p-0">
             <p className="fs-5">수정</p>
           </Col>
           <Col className="d-flex justify-content-center p-0">
@@ -114,17 +114,31 @@ const MenuList = () => {
           {/* <Col>itemImg</Col> */}
         </Row>
         <ListGroup>
-          {menulist.map((item) => {
-            return (
-              <MenuListEL
-                key={item.itemId}
-                item={item}
-                handlePlusModal={handlePlusModal}
-                handleMinusModal={handleMinusModal}
-                deleteMenu={deleteMenu}
-              />
-            );
-          })}
+          { arrayLength > 0 ? (
+            menulist.map((item) => {
+              return (
+                <MenuListEL
+                  key={item.itemId}
+                  item={item}
+                  // handlePlusModal={handlePlusModal}
+                  handleMinusModal={handleMinusModal}
+                  deleteMenu={deleteMenu}
+                />
+              );
+            })) : (
+                <ListGroup.Item className="d-inline-flex align-items-center">
+                <Col></Col>
+                <Col></Col>
+                <Col></Col>
+                <Col>
+                  <AiFillEdit />
+                </Col>
+                <Col>
+                  <TiDelete />
+                </Col>
+              </ListGroup.Item>
+            )
+          }
         </ListGroup>
       </Container>
       {/* {openPlusModal && <Modal_copy handleModal={handlePlusModal} />}
