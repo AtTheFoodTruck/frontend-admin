@@ -12,13 +12,18 @@ a {
 main {
   padding: 20px;
 }
+.bars {
+  cursor: pointer;
+}
+
 .title {
   font-size: 30px;
 }
 .sidebar {
-  background: #fff8e1;
-  color: black;
+  background: black;
+  color: white;
   height: 100vh;
+  opacity: 0.9;
 }
 .routes {
   color: black;
@@ -45,25 +50,28 @@ main {
   border: none;
   margin-left: 10px;
   border-radius: 5px;
-  background: #bcaaa4;
+  background: white;
 }
+
 .link {
   display: flex;
-  color: black;
+  color: white;
   gap: 10px;
   padding: 5px 10px;
   transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
 .link:hover {
-  border-right: 4px solid black;
+  border-right: 7px solid black;
   transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-  background: #bcaaa4;
+  background: white;
 }
 
 .active {
-  border-right: 4px solid black;
-  background: #bcaaa4;
+  border-right: 7px solid white;
+  /* background: black; */
+  /* opacity: 0.8; */
+  transition: 0.2s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
 
 .link_text {
