@@ -27,7 +27,8 @@ const MenuList = () => {
   async function getMenuList() {
     const foodtruck = await axios
       .get(
-        `http://localhost:8000/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
+        `https://apifood.blacksloop.com/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
+        // `http://localhost:8000/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
         { headers }
       )
       .then((res) => {
@@ -46,7 +47,8 @@ const MenuList = () => {
         item_id: itemId,
       };
       await axios
-        .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
+      .delete(`https://apifood.blacksloop.com/item-service/items/v1/owner/item`, {
+        // .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
           headers,
           data,
         })

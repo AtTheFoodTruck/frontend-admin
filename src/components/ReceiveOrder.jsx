@@ -34,7 +34,8 @@ const ReceiveOrder = () => {
   async function acceptOrder() {
     await axios
       .patch(
-        `http://localhost:8000/order-service/orders/v1/owner/accept`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
+        // `http://localhost:8000/order-service/orders/v1/owner/accept`,
         {
           order_id: 1,
         },
@@ -56,7 +57,8 @@ const ReceiveOrder = () => {
   async function rejectOrder() {
     await axios
       .patch(
-        `http://localhost:8000/order-service/orders/v1/owner/reject`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
+        // `http://localhost:8000/order-service/orders/v1/owner/reject`,
         {
           order_id: 1,
         },
@@ -83,7 +85,8 @@ const ReceiveOrder = () => {
   async function completeOrder() {
     await axios
       .patch(
-        `http://localhost:8000/order-service/orders/v1/owner/complete`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
+        // `http://localhost:8000/order-service/orders/v1/owner/complete`,
         {
           order_id: 1,
         },
@@ -110,8 +113,8 @@ const ReceiveOrder = () => {
     // const foodtruck = await axios
     await axios
       .post(
-        // `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
-        `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
+        // `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
         {
           user_id: 2,
           order_date: '2022-04-25',
