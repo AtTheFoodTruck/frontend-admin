@@ -3,6 +3,8 @@ import { Container, ListGroup, Col, Button, Row } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import ReceiveOrderList from "./ReceiveOrderList";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 const ReceiveOrderWrapper = styled.div`
   position: absolute;

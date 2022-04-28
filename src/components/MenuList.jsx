@@ -49,11 +49,14 @@ const [arrayLength, setArrayLength] = useState(0);
         item_id: itemId,
       };
       await axios
-      .delete(`https://apifood.blacksloop.com/item-service/items/v1/owner/item`, {
-        // .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
-          headers,
-          data,
-        })
+        .delete(
+          `https://apifood.blacksloop.com/item-service/items/v1/owner/item`,
+          {
+            // .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
+            headers,
+            data,
+          }
+        )
         .then((res) => {
           console.log(res);
           if (res.data.result === "success") {
