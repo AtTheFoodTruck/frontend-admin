@@ -18,14 +18,14 @@ const DashBoard = () => {
           <Col>
             <Link to="/receive-order">
               <Button style={{ width: '18rem' }}>
-                <p className="fs-1">주문접수</p>
+                <p className="fs-1">주문</p>
               </Button>
             </Link>
           </Col>
           <Col>
-            <Link to="/menu-register">
+            <Link to="/menu-list">
               <Button style={{ width: '18rem' }}>
-                <p className="fs-1">메뉴등록</p>
+                <p className="fs-1">메뉴 관리</p>
               </Button>
             </Link>
           </Col>
