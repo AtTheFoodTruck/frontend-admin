@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
-import styled from "styled-components";
-import axios from "axios";
-import MenuListEL from "./MenuListEL";
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import styled from 'styled-components';
+import axios from 'axios';
+import MenuListEL from './MenuListEL';
 
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
@@ -13,8 +13,8 @@ const ReceiveOrderWrapper = styled.div`
 
 // 메뉴 조회 api
 const MenuList = () => {
-  const authorization = localStorage.getItem("Authorization");
-  const userId = localStorage.getItem("userId");
+  const authorization = localStorage.getItem('Authorization');
+  const userId = localStorage.getItem('userId');
   const headers = {
     Authorization: `Bearer ${authorization}`,
   };
@@ -27,7 +27,7 @@ const MenuList = () => {
         { headers }
       )
       .then((res) => {
-        console.log("최초 렌더링 api 호출");
+        console.log('최초 렌더링 api 호출');
         setMenuList(res.data.data.itemsDto);
         console.log(res.data.data.itemsDto);
       })
@@ -36,22 +36,26 @@ const MenuList = () => {
 
   // 메뉴 삭제 api
   async function deleteMenu(itemId) {
-    if(window.confirm("메뉴를 삭제하시겠습니까?")) {
+    if (window.confirm('메뉴를 삭제하시겠습니까?')) {
       const data = {
         user_id: userId,
-        item_id: itemId
-      }
-    await axios.delete(`http://localhost:8000/item-service/items/v1/owner/item`,
-         { headers, data }
-      ).then(res => {
-        console.log(res);
-        if( res.data.result === "success"){
-          alert(res.data.message);
-          document.location.reload();
-        }
-    }).catch(err => console.log(err));
+        item_id: itemId,
+      };
+      await axios
+        .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
+          headers,
+          data,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.result === 'success') {
+            alert(res.data.message);
+            document.location.reload();
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   }
-};
 
   // 최초 페이지 렌더링
   useEffect(() => {
@@ -62,21 +66,37 @@ const MenuList = () => {
     <ReceiveOrderWrapper>
       <Container className="text-center">
         <p className="fs-1">메뉴목록</p>
-        <ListGroup>
-          <ListGroup.Item className="d-inline-flex align-items-center">
-            <Col>메뉴번호</Col>
-            <Col>이름</Col>
-            <Col>가격</Col>
-            <Col>등록</Col>
-            <Col>수정</Col>
-            <Col>삭제</Col>
-            {/* <Col>설명</Col> */}
-            {/* <Col>itemImg</Col> */}
-          </ListGroup.Item>
-        </ListGroup>
+        <Row className="mt-5">
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">메뉴번호</p>
+          </Col>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">이름</p>
+          </Col>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">가격</p>
+          </Col>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">등록</p>
+          </Col>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">수정</p>
+          </Col>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">삭제</p>
+          </Col>
+          {/* <Col>설명</Col> */}
+          {/* <Col>itemImg</Col> */}
+        </Row>
         <ListGroup>
           {menulist.map((item) => {
-            return <MenuListEL key={item.itemId} item={item} deleteMenu={deleteMenu} />;
+            return (
+              <MenuListEL
+                key={item.itemId}
+                item={item}
+                deleteMenu={deleteMenu}
+              />
+            );
           })}
         </ListGroup>
       </Container>

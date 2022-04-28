@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Container, ListGroup, Col, Button, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, ListGroup, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import axios from "axios";
+import axios from 'axios';
 import ReceiveOrderList from './ReceiveOrderList';
 
 const ReceiveOrderWrapper = styled.div`
@@ -12,16 +12,15 @@ const ReceiveOrderWrapper = styled.div`
 `;
 
 const ReceiveOrder = () => {
-
   // 변수 초기화
-  const [orderList, setOrderList] = useState([])    // 주문내역
-  const [orderItems, setOrderItems] = useState([])  // 주문내역의 주문 아이템 목록
+  const [orderList, setOrderList] = useState([]); // 주문내역
+  const [orderItems, setOrderItems] = useState([]); // 주문내역의 주문 아이템 목록
   const [acceptType, setAcceptType] = useState(false);
   const [rejectType, setRejectType] = useState(true);
   const [completeType, setCompleteType] = useState(true);
   // 유저 정보
-  const authorization = localStorage.getItem("Authorization");
-  const userId = localStorage.getItem("userId");
+  const authorization = localStorage.getItem('Authorization');
+  const userId = localStorage.getItem('userId');
   const headers = {
     Authorization: `Bearer ${authorization}`,
   };
@@ -32,61 +31,77 @@ const ReceiveOrder = () => {
   }, []);
 
   // 주문 접수 클릭 이벤트
-  async function acceptOrder () {
-    await axios.patch(`http://localhost:8000/order-service/orders/v1/owner/accept`, {
-      order_id: 1
-    },{
-      headers
-    }
-    ).then(res => {
-      console.log(res);}
-    ).catch(err => {
-      console.log(err);
-    })
+  async function acceptOrder() {
+    await axios
+      .patch(
+        `http://localhost:8000/order-service/orders/v1/owner/accept`,
+        {
+          order_id: 1,
+        },
+        {
+          headers,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     setAcceptType(true);
   }
 
   // 주문 거절 클릭 이벤트
-  async function rejectOrder () {
-    await axios.patch(`http://localhost:8000/order-service/orders/v1/owner/reject`, {
-      order_id: 1
-    },{
-      headers
-    }
-    ).then(res => {
-      console.log(res);
-      if (res.data.result === 'success') {
-        return alert(res.data.message)
-      }else {
-        return alert("오류가 발생하였습니다. 관리자에게 문의하세요")
-      }
-    }
-    ).catch(err => {
-      console.log(err);
-    })
+  async function rejectOrder() {
+    await axios
+      .patch(
+        `http://localhost:8000/order-service/orders/v1/owner/reject`,
+        {
+          order_id: 1,
+        },
+        {
+          headers,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data.result === 'success') {
+          return alert(res.data.message);
+        } else {
+          return alert('오류가 발생하였습니다. 관리자에게 문의하세요');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     setRejectType(true);
   }
 
   // 조리 완료 클릭 이벤트
-  async function completeOrder () {
-    await axios.patch(`http://localhost:8000/order-service/orders/v1/owner/complete`, {
-      order_id: 1
-    },{
-      headers
-    }
-    ).then(res => {
-      console.log(res);
-      if (res.data.result === 'success') {
-        return alert(res.data.message)
-      }else {
-        return alert("오류가 발생하였습니다. 관리자에게 문의하세요")
-      }
-    }
-    ).catch(err => {
-      console.log(err);
-    })
+  async function completeOrder() {
+    await axios
+      .patch(
+        `http://localhost:8000/order-service/orders/v1/owner/complete`,
+        {
+          order_id: 1,
+        },
+        {
+          headers,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data.result === 'success') {
+          return alert(res.data.message);
+        } else {
+          return alert('오류가 발생하였습니다. 관리자에게 문의하세요');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setCompleteType(true);
   }
 
@@ -99,7 +114,7 @@ const ReceiveOrder = () => {
         `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
         {
           user_id: 2,
-          order_date: "2022-04-25"
+          order_date: '2022-04-25',
         },
         { headers }
       )
@@ -115,35 +130,35 @@ const ReceiveOrder = () => {
     <ReceiveOrderWrapper>
       <Container className="text-center">
         <p className="fs-1">주문접수</p>
-        <Row>
+        <Row className=" mt-5">
           {/* <Col lg={3}></Col> */}
-          <Col className='d-flex justify-content-start p-0'>
-            <h5>주문번호</h5>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">주문번호</p>
           </Col>
-          <Col className='d-flex justify-content-start p-0'>
-            <h5>주문시간</h5>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">주문시간</p>
           </Col>
-          <Col className='d-flex justify-content-start p-0'>
-            <h5>주문상태</h5>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">주문상태</p>
           </Col>
-          <Col className='d-flex justify-content-start p-0'>
-            <h5>주문자</h5>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">주문자</p>
           </Col>
-          <Col className='d-flex justify-content-start p-0'>
-            <h5>아이템</h5>
+          <Col className="d-flex justify-content-center p-0">
+            <p className="fs-5">아이템</p>
           </Col>
         </Row>
         <ListGroup>
-            {orderList.map( (orderListItem) => (
-              <ReceiveOrderList 
-                key={orderListItem.orderId} 
-                orderListItem={orderListItem} 
-                orderItems={orderItems}
-                acceptOrder={acceptOrder}
-                rejectOrder={rejectOrder}
-                completeOrder={completeOrder}
-              />
-            ))}
+          {orderList.map((orderListItem) => (
+            <ReceiveOrderList
+              key={orderListItem.orderId}
+              orderListItem={orderListItem}
+              orderItems={orderItems}
+              acceptOrder={acceptOrder}
+              rejectOrder={rejectOrder}
+              completeOrder={completeOrder}
+            />
+          ))}
         </ListGroup>
       </Container>
     </ReceiveOrderWrapper>
