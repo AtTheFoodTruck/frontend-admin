@@ -21,7 +21,7 @@ const _routes = [
     icon: <FaHome />,
   },
   {
-    path: "/store-Register",
+    path: "/store-register",
     name: "상점 등록",
     icon: <AiOutlineCheckCircle />,
   },

@@ -92,13 +92,12 @@ const StoreRegister = () => {
   const [inputPhonenumber, setInputPhonenumber] = useState("");
 
   const [isEmail, setIsEmail] = useState(false);
-  const [StoreName, setStoreName] = useState("SotreName");
+  const [StoreName, setStoreName] = useState("StoreName");
   const [isPhone, setIsPhone] = useState(false);
   const [phoneMessage, setPhoneMessage] = useState("Phone Number");
   const [address, setAddress] = useState("Address");
   const [Notice, setNotice] = useState("notice");
   const [openTime, setopenTime] = useState("openTime");
-
   const navigate = useNavigate();
 
   // 메일 입력시 상태값 변경
@@ -137,6 +136,22 @@ const StoreRegister = () => {
     }
   }
 
+  //카테고리
+  const [cate, setCate] = useState();
+  const handlecate = (e) => {
+    console.log(`선택한 radio 값 : ${e.target.value}`);
+
+    setCate(e.target.value);
+  };
+  const category = [
+    { id: 1, name: "치킨" },
+    { id: 2, name: "피자" },
+    { id: 3, name: "햄버거" },
+    { id: 4, name: "스테이크" },
+    { id: 5, name: "닭강정" },
+    { id: 6, name: "핫도그" },
+    { id: 7, name: "아이스크림" },
+  ];
   return (
     <MemberRegisterContainer>
       <form className="container">
@@ -147,13 +162,13 @@ const StoreRegister = () => {
           <div className="form-floating">
             <input
               type="text"
-              name="input_email"
+              name="store"
               //   value={inputEmail}
               className="form-control"
-              id="input_email"
+              id="storelabel"
               placeholder="상점 이름을 입력하세요."
             />
-            <label htmlFor="floatingInput">{StoreName}</label>
+            <label htmlFor="storelabel">{StoreName}</label>
           </div>
         </div>
         <div className="storeDuplicate">
@@ -165,13 +180,12 @@ const StoreRegister = () => {
           <div className="form-floating">
             <input
               type="text"
-              name="input_phonenumber"
-              //   value={inputPhonenumber}
+              name="phone"
               className="form-control"
-              id="input_phonenumber"
+              id="phonelabel"
               placeholder="휴대전화 번호를 입력하세요."
             />
-            <label htmlFor="floatingPassword">{phoneMessage}</label>
+            <label htmlFor="phonelabel">{phoneMessage}</label>
           </div>
         </div>
         {/* 주소*/}
@@ -179,26 +193,24 @@ const StoreRegister = () => {
           <div className="form-floating">
             <input
               type="text"
-              name="input_bnumber"
-              //   value={bNumber}
+              name="address"
               className="form-control"
-              id="input_bnumber"
+              id="addresslabel"
               placeholder="주소를 입력하세요."
             />
-            <label htmlFor="floatingPassword">{address}</label>
+            <label htmlFor="addresslabel">{address}</label>
           </div>
         </div>
         {/* notice */}
         <div className="notice form-group">
           <div className="form-floating">
             <textarea
-              name="input_pw"
-              //   value={inputPw}
+              name="notice"
               className="form-control textarea"
-              id="input_pw"
+              id="noticelabel"
               placeholder="공지사항을 입력하세요."
             />
-            <label className="form-label" htmlFor="floatingPassword">
+            <label className="form-label" htmlFor="noticelabel">
               {Notice}
             </label>
           </div>
@@ -207,108 +219,35 @@ const StoreRegister = () => {
         <div className="openTime">
           <div className="form-floating">
             <input
-              type="password"
-              name="input_pwVerification"
-              //   value={inputpwVerification}
+              type="text"
+              name="calendar"
               className="form-control"
-              id="input_pwVerification"
+              id="calendarlabel"
               placeholder="오픈 시간을 입력하세요."
             />
-            <label htmlFor="floatingPassword">{openTime}</label>
+            <label htmlFor="calendarlabel">{openTime}</label>
           </div>
         </div>
-
         {/* 라디오 버튼 시작 */}
-        <div className="radiobutton radio">
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-            />
-            <label className="form-check-label" htmlfor="flexRadioDefault1">
-              치킨
-            </label>
-          </div>
-
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
-              checked
-            />
-            <label className="form-check-label" htmlfor="flexRadioDefault2">
-              피자
-            </label>
-          </div>
-
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault3"
-              checked
-            />
-            <label className="form-check-label" htmlfor="flexRadioDefault2">
-              햄버거
-            </label>
-          </div>
-
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault4"
-              checked
-            />
-            <label className="form-check-label" htmlfor="flexRadioDefault2">
-              스테이크
-            </label>
-          </div>
-
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault5"
-              checked
-            />
-            <label className="form-check-label" htmlfor="flexRadioDefault2">
-              닭강정
-            </label>
-          </div>
-
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault6"
-              checked
-            />
-            <label className="form-check-label" htmlfor="flexRadioDefault2">
-              핫도그
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault7"
-              checked
-            />
-            <label className="form-check-label" htmlfor="flexRadioDefault2">
-              아이스크림
-            </label>
-          </div>
+        <div className="radiobutton radio form-group">
+          {category.map((item) => (
+            <div key={item.id} className="form-check">
+              <label className="form-check-label" htmlfor={item.name}>
+                {item.name}
+              </label>
+              <input
+                className="form-check-input"
+                type="radio"
+                name={item.name}
+                id={item.name}
+                value={item.name}
+                checked={cate === item.name}
+                onChange={handlecate}
+              />
+            </div>
+          ))}
         </div>
+
         {/*TODO AWS이미지 업데이트 변경  Logo */}
         <div className="form-group logo">
           <label htmlfor="formFile" className="form-label mt-2 mb-3 ">

@@ -22,7 +22,7 @@ function App() {
           <Route path="/receive-order" element={<ReceiveOrder />} />
           <Route path="/menu-list" element={<MenuList />} />
           <Route path="/owner-register" element={<OwnerRegister />} />
-          <Route path="/store-Register" element={<StoreRegister />} />
+          <Route path="/store-register" element={<StoreRegister />} />
         </Routes>
       </Sidebar>
     </>
