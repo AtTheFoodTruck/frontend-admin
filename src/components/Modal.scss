@@ -1,0 +1,105 @@
+@import "./global.scss";
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/notosanskr/v13/PbykFmXiEBPT4ITbgNA5Cgm203Tq4JJWq209pU0DPdWuqxJFA4GNDCBYtw.0.woff2)
+    format("woff2");
+}
+
+#modal.modal_overlay {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.158);
+  backdrop-filter: blur(3.25px);
+
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    font-family: "Do Hyeon", sans-serif;
+  }
+  //@include boxShadow();
+
+  .modal_window {
+    // display: grid;
+    // grid-template-columns: 250px 300px 300px;
+    // grid-template-rows: 30px 180px 65px 50px;
+    display: grid;
+    grid-template-columns: 250px 400px;
+    grid-template-rows: 300px;
+    grid-column-gap: 4px;
+    grid-row-gap: 12px;
+
+    grid-auto-flow: row dense;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    position: relative;
+    width: $modal-width;
+    height: $modal-height;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    -webkit-box-shadow: 4px 5px 8px -6px rgba(0, 0, 0, 0.65);
+    box-shadow: 4px 5px 8px -6px rgba(0, 0, 0, 0.65);
+    color: $common-color;
+    padding: 22px 22px 8px 22px;
+    z-index: 1000;
+    border-radius: 8px;
+
+    .close_btn {
+      font-weight: bold;
+      margin-left: 18px;
+    }
+
+    //이미지 파일업로드 작게
+    .upload_img {
+      grid-area: 1 / 1 / 2 / 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+    }
+
+    //
+    .input_info {
+      grid-area: 1 / 2 / 2 / 3;
+
+      // padding-left: 6px;
+      height: $modal-height;
+
+      .content {
+        margin: 16px auto 16px 26px;
+        display: flex;
+        flex-direction: column;
+        align-self: flex-start;
+
+        // justify-content: flex-start;
+
+        input {
+          margin-bottom: 5px;
+        }
+      }
+      .btn_wrapper {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 12px;
+      }
+    }
+
+    label {
+      font-size: 14px;
+    }
+  }
+}

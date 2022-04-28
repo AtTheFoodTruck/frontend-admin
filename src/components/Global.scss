@@ -1,0 +1,53 @@
+@mixin flexColCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+// @mixin boxShadow {
+//   -webkit-box-shadow: 1px 2px 8px 1px rgba(0, 0, 0, 0.75);
+//   box-shadow: 1px 2px 8px 1px rgba(0, 0, 0, 0.75);
+// }
+$title-color: black;
+$common-color: rgb(153, 153, 153);
+$modal-width: 750px;
+$modal-height: 320px;
+$font-title-size: 19px;
+$font-md-size: 16px;
+
+body {
+  box-sizing: border-box;
+  font-size: $font-md-size;
+}
+body,
+li,
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+dl,
+dd {
+  margin: 0;
+}
