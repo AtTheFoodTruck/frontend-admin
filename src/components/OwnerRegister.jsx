@@ -338,7 +338,7 @@ const OwnerRegister = () => {
       alert("양삭애 맞게 다시 기입해주세요");
     } else {
       axios
-        .post("https://apifood.blacksloop.com/user-service/users/v1/join", {
+        .post("https://apifood.blacksloop.com/user-service/users/v1/owner/join", {
           email: inputEmail,
           username: inputUsername,
           password: inputPw,
