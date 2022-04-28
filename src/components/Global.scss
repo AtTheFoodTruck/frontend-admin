@@ -4,18 +4,15 @@
   justify-content: center;
   align-items: center;
 }
-@mixin iconSize {
-  font-size: 26px;
-  margin-bottom: 4px;
-}
 
-@mixin boxShadow {
-  -webkit-box-shadow: 1px 2px 8px 1px rgba(0, 0, 0, 0.75);
-  box-shadow: 1px 2px 8px 1px rgba(0, 0, 0, 0.75);
-}
-$title-color: #fff;
+// @mixin boxShadow {
+//   -webkit-box-shadow: 1px 2px 8px 1px rgba(0, 0, 0, 0.75);
+//   box-shadow: 1px 2px 8px 1px rgba(0, 0, 0, 0.75);
+// }
+$title-color: black;
 $common-color: rgb(153, 153, 153);
-$modal-height: 350px;
+$modal-width: 750px;
+$modal-height: 320px;
 $font-title-size: 19px;
 $font-md-size: 16px;
 

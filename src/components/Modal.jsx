@@ -3,7 +3,6 @@ import axios from "axios";
 import { useState } from "react";
 import ImgUpload from "./ImgUpload";
 import AWS from "aws-sdk";
-import { AiFillStar } from "react-icons/ai";
 
 const Modal = ({ handleModal }) => {
   // 유저 정보
@@ -129,36 +128,34 @@ const Modal = ({ handleModal }) => {
 
   return (
     //화면 blur 처리할 overlay
-    <div className="modal_overlay" id="modal">
+    <div className="modal_overlay " id="modal">
       {/* 실제 modal창 */}
+      <h3 className="title">메뉴 관리</h3>
       <div
         className="modal_window"
         // id={itemId}
         onClick={(e) => e.stopPropagation()}
       >
         {/* closeBtn*/}
-        <button className="close_btn" id="closeBtn" onClick={handleModal}>
+        {/* <button className="close_btn" id="closeBtn" onClick={handleModal}>
           X
-        </button>
-        {/* 영화 포스터 */}
-        <ImgUpload
-          setState={setInputs}
-          loaded={loaded}
-          fileURL={fileURL}
-          handleImgInput={handleImgInput}
-          handleImgUpload={handleImgUpload}
-        />
-        {/* <img className="poster_img" src={modalPosterImg}></img> */}
+        </button> */}
 
-        {/* 영화 title*/}
-        <div className="title">
-          <h3>메뉴관리</h3>
+        {/* 업로드 이미지 */}
+        <div class="upload_img">
+          {" "}
+          <ImgUpload
+            setState={setInputs}
+            loaded={loaded}
+            fileURL={fileURL}
+            handleImgInput={handleImgInput}
+            handleImgUpload={handleImgUpload}
+          />
         </div>
-        <div className="movieInfo">
-          {/* 영화 summary*/}
+        {/* 정보 입력 */}
+        <div class="input_info">
           <div className="content">
-            <span className="summary">---</span>
-            <div>
+            <div className="menu">
               <label htmlFor="menuName">메뉴명</label>
               <input
                 className="form-control"
@@ -168,7 +165,7 @@ const Modal = ({ handleModal }) => {
                 id="menuName"
               />
             </div>
-            <div>
+            <div className="price">
               <label htmlFor="menuPrice">가격</label>
               <input
                 className="form-control"
@@ -178,7 +175,7 @@ const Modal = ({ handleModal }) => {
                 id="menuPrice"
               />
             </div>
-            <div>
+            <div className="desc">
               <label htmlFor="description">설명</label>
               <input
                 className="form-control"
@@ -189,21 +186,26 @@ const Modal = ({ handleModal }) => {
               />
             </div>
           </div>
+          <div className="btn_wrapper">
+            <button
+              type="button"
+              class="btn btn-primary"
+              onClick={postMenuPush}
+            >
+              저장
+            </button>
+            <button
+              type="button"
+              className="close_btn btn btn-outline-danger"
+              id="closeBtn"
+              onClick={handleModal}
+            >
+              취소
+            </button>
+          </div>
         </div>
-        <dl className="summaryInfo">
-          {/* <dt>Genre</dt>
-          <dd>{movie.genre}</dd> */}
-          <dt>--</dt>
-          <dd>--</dd>
-          <dt>--</dt>
-          <dd>--</dd>
-          <dt>--</dt>
-          <dd>
-            <AiFillStar className="star" />
-          </dd>
-        </dl>
-        {/* icons*/}
-        <Button onClick={postMenuPush}>등록</Button>
+
+        {/* <img className="poster_img" src={modalPosterImg}></img> */}
       </div>
     </div>
   );

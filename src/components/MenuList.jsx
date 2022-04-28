@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import MenuListEL from "./MenuListEL";
 import Modal from "./Modal";
+import "./Modal.scss";
 const MenuList = () => {
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
@@ -79,8 +80,14 @@ const MenuList = () => {
               />
             );
           })}
+          <MenuListEL
+            handlePlusModal={handlePlusModal}
+            handleMinusModal={handleMinusModal}
+          />
         </ListGroup>
       </Container>
+      {/* {openPlusModal && <Modal_copy handleModal={handlePlusModal} />}
+      {openMinusModal && <Modal_copy handleModal={handleMinusModal} />} */}
       {openPlusModal && <Modal handleModal={handlePlusModal} />}
       {openMinusModal && <Modal handleModal={handleMinusModal} />}
     </ReceiveOrderWrapper>

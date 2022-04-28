@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Col, ListGroup } from "react-bootstrap";
 import { AiFillPlusCircle, AiFillEdit } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
-import Modal from "./Modal";
+
 const MenuListEL = ({ item, handlePlusModal, handleMinusModal }) => {
   return (
     <>
