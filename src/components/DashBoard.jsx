@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const DashBoardWrapper = styled.div`
   position: absolute;
   align-items: center;
-  width: 100%;
+  width: 85%;
   top: 25%;
 `;
 
