@@ -1,11 +1,10 @@
 import { Container, Col, Row, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { useState } from "react";
-import ImgUpload from './ImgUpload';
-import AWS from 'aws-sdk';
+import ImgUpload from "./ImgUpload";
+import AWS from "aws-sdk";
 
 const MenuRegister = () => {
-
   // 유저 정보
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
@@ -19,10 +18,11 @@ const MenuRegister = () => {
     description: "",
     price: "",
   });
+
   const { menuname, description, price } = inputs; // 비구조화 할당을 통해 값 추출
-  const [imgURL, setImgURL] = useState(''); // image 상태
-  const [fileURL, setFileURL] = useState('img/default_image.png'); //미리보기
-  const [reviewLocation, setReviewLocation] = useState('');
+  const [imgURL, setImgURL] = useState(""); // image 상태
+  const [fileURL, setFileURL] = useState("img/default_image.png"); //미리보기
+  const [reviewLocation, setReviewLocation] = useState("");
   const [loaded, setLoaded] = useState(false);
 
   // InputBox Change Event
@@ -40,8 +40,8 @@ const MenuRegister = () => {
       ...inputs,
       menuname: "",
       description: "",
-      price: ""
-    })
+      price: "",
+    });
   };
 
   // S3 환경 설정
@@ -57,7 +57,7 @@ const MenuRegister = () => {
     const fileReader = new FileReader();
     const file = e.target.files[0];
     if (file) {
-      setLoaded('loading');
+      setLoaded("loading");
       fileReader.readAsDataURL(file);
     }
     fileReader.onload = () => {
@@ -74,10 +74,10 @@ const MenuRegister = () => {
     const file = e.target.files[0];
     const upload = new AWS.S3.ManagedUpload({
       params: {
-        ACL: 'public-read',
+        ACL: "public-read",
         Body: file,
         Bucket: process.env.REACT_APP_S3_BUCKET,
-        Key: 'menu/' + file.name,
+        Key: "menu/" + file.name,
       },
     });
 
@@ -86,18 +86,18 @@ const MenuRegister = () => {
     promise.then(
       function (data) {
         setReviewLocation(data.Location);
-        console.log(data.Location + '업로드 성공');
+        console.log(data.Location + "업로드 성공");
       },
 
       function (err) {
         console.log(err);
-        console.log('env, ', process.env.AWS_CONFIG);
-        return console.log('오류가 발생했습니다');
+        console.log("env, ", process.env.AWS_CONFIG);
+        return console.log("오류가 발생했습니다");
       }
     );
   };
 
-  // 메뉴 등록 api 
+  // 메뉴 등록 api
   const postMenuPush = async () => {
     await axios
       .post(
@@ -112,15 +112,15 @@ const MenuRegister = () => {
           item_img_url: reviewLocation,
         },
         {
-          headers: headers
+          headers: headers,
         }
       )
       .then((res) => {
-        if( res.data.result === "success") {
+        if (res.data.result === "success") {
           console.log(res);
           alert("메뉴 등록 성공");
-          onReset()
-        }else {
+          onReset();
+        } else {
           alert("메뉴 등록에 실패하였습니다. 관리자에게 문의해주세여");
         }
       })
@@ -132,13 +132,13 @@ const MenuRegister = () => {
       <p className="fs-1">메뉴관리</p>
       <Row className="d-flex align-items-center">
         <Col>
-            <ImgUpload
-              setState={setInputs}
-              loaded={loaded}
-              fileURL={fileURL}
-              handleImgInput={handleImgInput}
-              handleImgUpload={handleImgUpload}
-            />
+          <ImgUpload
+            setState={setInputs}
+            loaded={loaded}
+            fileURL={fileURL}
+            handleImgInput={handleImgInput}
+            handleImgUpload={handleImgUpload}
+          />
         </Col>
 
         <Col>

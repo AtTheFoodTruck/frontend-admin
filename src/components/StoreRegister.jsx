@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { log } from "util";
 
 const MemberRegisterContainer = styled.div`
   position: absolute;
@@ -87,52 +88,102 @@ const MemberRegisterContainer = styled.div`
 `;
 
 const StoreRegister = () => {
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputUsername, setInputUsername] = useState("");
-  const [inputPhonenumber, setInputPhonenumber] = useState("");
+  // 유저 정보
+  const authorization = localStorage.getItem("Authorization");
+  const userId = localStorage.getItem("userId");
+  const headers = {
+    Authorization: `Bearer ${authorization}`,
+  };
 
-  const [isEmail, setIsEmail] = useState(false);
-  const [StoreName, setStoreName] = useState("StoreName");
-  const [isPhone, setIsPhone] = useState(false);
-  const [phoneMessage, setPhoneMessage] = useState("Phone Number");
-  const [address, setAddress] = useState("Address");
-  const [Notice, setNotice] = useState("notice");
-  const [openTime, setopenTime] = useState("openTime");
+  // 변수 초기화
+  const [inputs, setInputs] = useState({
+    store: "",
+    phone: "",
+    notice: "",
+    address: "",
+    calendar: "",
+  });
+  const { store, phone, notice, address, calendar } = inputs; // 비구조화 할당을 통해 값 추출
+
+  // InputBox Change Event
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
+  // 저장 후 텍스트 ""로 초기화
+  const onReset = () => {
+    setInputs({
+      ...inputs,
+      store: "",
+      phone: "",
+      notice: "",
+      address: "",
+      calendar: "",
+    });
+  };
+
+  // const postStore = () => {
+  //   console.log({ inputs });
+  //   console.log(cate);
+  //   onReset();
+  //   setCate(false);
+  // };
+
   const navigate = useNavigate();
 
   // 메일 입력시 상태값 변경
 
-  //TODO 회원 가입
+  // //TODO 회원 가입
   async function onClickJoin(e) {
     e.preventDefault();
-    if (inputEmail === "") {
+    if (store === "") {
       alert("상점 이름을 입력해주세요");
-    } else if ("비어있음" === "") {
+    } else if (phone === "") {
       alert("핸드폰 번호 입력해주세요");
-    } else if (inputPhonenumber === "") {
-      alert("주소를 입력해주세요");
-    } else if (isPhone === false) {
+    } else if (notice === false) {
       alert("공지사항을 입력해주세요");
-    } else if (!(isEmail && isPhone)) {
-      alert("양삭애 맞게 다시 기입해주세요");
+    } else if (!(store && phone && notice)) {
+      alert("양식에 맞게 다시 기입해주세요");
     } else {
       axios
-        .post("https://apifood.blacksloop.com/user-service/users/v1/join", {
-          email: inputEmail,
-          username: inputUsername,
-          phone_num: inputPhonenumber,
-        })
-        .then(function (response) {
-          if (response.data.result === "fail") {
-            alert(response.data.message);
+        // .post("https://apifood.blacksloop.com/item-service/items/v1/owner/stores", {
+        .post(
+          "https://apifood.blacksloop.com/item-service/items/v1/owner/stores",
+          {
+            user_id: userId,
+            store_name: store,
+            phone_num: phone,
+            notice: notice,
+            category_name: cate,
+            // store_img_url:"imgUrl2",
+            // open_time: "2018-12-15T10:00:00",
+            // address: "서울시 구로구 공원로길",
+            // zip_code: "06666",
+            // latitude: 1782.93,
+            // longitude: 168.156,
+            // b_no:"1348639909222222",
+            // s_dt:"20070523",
+            // p_name:"이한종99"
+          },
+          {
+            headers: headers,
+          }
+        )
+        .then(function (res) {
+          if (res.data.result === "success") {
+            alert("상점 등록 성공");
+            onReset();
+            setCate(false);
           } else {
-            alert("메뉴 등록 성공");
+            alert("상점 등록에 실패하였습니다. 관리자에게 문의해주세여");
             navigate("/", { replace: true });
           }
         })
-        .catch(function (error) {
-          console.log(error);
-        });
+        .catch((err) => console.log("return error" + err));
     }
   }
 
@@ -167,8 +218,10 @@ const StoreRegister = () => {
               className="form-control"
               id="storelabel"
               placeholder="상점 이름을 입력하세요."
+              value={store}
+              onChange={onChange}
             />
-            <label htmlFor="storelabel">{StoreName}</label>
+            <label htmlFor="storelabel">StoreName</label>
           </div>
         </div>
         <div className="storeDuplicate">
@@ -184,11 +237,13 @@ const StoreRegister = () => {
               className="form-control"
               id="phonelabel"
               placeholder="휴대전화 번호를 입력하세요."
+              value={phone}
+              onChange={onChange}
             />
-            <label htmlFor="phonelabel">{phoneMessage}</label>
+            <label htmlFor="phonelabel">PhoneMessage</label>
           </div>
         </div>
-        {/* 주소*/}
+        {/*TODO 주소*/}
         <div className="address">
           <div className="form-floating">
             <input
@@ -197,8 +252,10 @@ const StoreRegister = () => {
               className="form-control"
               id="addresslabel"
               placeholder="주소를 입력하세요."
+              onChange={onChange}
+              value={address}
             />
-            <label htmlFor="addresslabel">{address}</label>
+            <label htmlFor="addresslabel">Address</label>
           </div>
         </div>
         {/* notice */}
@@ -209,9 +266,11 @@ const StoreRegister = () => {
               className="form-control textarea"
               id="noticelabel"
               placeholder="공지사항을 입력하세요."
+              value={notice}
+              onChange={onChange}
             />
             <label className="form-label" htmlFor="noticelabel">
-              {Notice}
+              Notice
             </label>
           </div>
         </div>
@@ -224,8 +283,10 @@ const StoreRegister = () => {
               className="form-control"
               id="calendarlabel"
               placeholder="오픈 시간을 입력하세요."
+              onChange={onChange}
+              value={calendar}
             />
-            <label htmlFor="calendarlabel">{openTime}</label>
+            <label htmlFor="calendarlabel">OpenTime</label>
           </div>
         </div>
         {/* 라디오 버튼 시작 */}
@@ -258,7 +319,7 @@ const StoreRegister = () => {
         {/* store push 버튼 */}
         <div className="join">
           <button
-            type="submit"
+            type="button"
             className=" btn btn-lg btn-outline-secondary"
             onClick={onClickJoin}
           >
