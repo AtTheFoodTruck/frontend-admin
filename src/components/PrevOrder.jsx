@@ -5,7 +5,7 @@ import axios from "axios";
 import PrevOrderList from "./PrevOrderList";
 import DatePicker from "react-datepicker";
 import { DateRange } from "react-date-range";
-import { addDays } from "date-fns";
+import { addDays, startOfWeek } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { ko } from "date-fns/locale";
@@ -14,46 +14,23 @@ import { ko } from "date-fns/locale";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const PrevOrder = () => {
+  // const url =
+  // "https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=15";
   const url = `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=15`;
 
   const authorization = localStorage.getItem("Authorization");
+  const userId = localStorage.getItem("userId");
   const [prevOrderList, setPrevOrderList] = useState([]);
-
   const [state, setState] = useState({
-    userId: 0,
-    startData: "",
-    endData: "",
+    user_id: 0,
+    start_date: "",
+    end_date: "",
   });
 
   const headers = {
     Authorization: `Bearer ${authorization}`,
   };
-  const getPrevOrderList = async () => {
-    // console.log("state : " + state);
-    await axios
-      .post(
-        url,
-        {
-          user_id: state.userId,
-          start_data: state.startData,
-          end_data: state.endData,
-        },
-        { headers }
-      )
-      .then((response) => {
-        setPrevOrderList(response);
-        console.log(response);
-        console.log("조회 성공");
-      })
-      .catch((err) => console.log(err.response));
-  };
-
-  //    setState({
-  //      ...state,
-  //      user_id: userId,
-  //      start_data: startData,
-  //      end_data: endData,
-  //    });
+  console.log(state);
 
   //datePicker
 
@@ -87,9 +64,6 @@ const PrevOrder = () => {
     return [year, month, day].join(delimiter);
   }
 
-  // 최초 페이지 렌더링
-  useEffect(() => {}, []);
-
   const sDate = toStringByFormatting(startDate);
   const eDate = toStringByFormatting(endDate); // ex)2021-04-24
   const sDateKo =
@@ -109,24 +83,45 @@ const PrevOrder = () => {
 
   console.log("sDate : " + sDate);
   console.log("eDate : " + eDate);
+
   if (!sDate == eDate) {
     console.log("modal close");
   } else {
     console.log("modal open");
   }
 
+  const handleSearch = async () => {
+    setState({
+      ...state,
+      user_id: userId,
+      start_date: sDate,
+      end_date: eDate,
+    });
+    const getPrevOrderList = async () => {
+      console.log("state : " + state);
+      await axios
+        .post(
+          url,
+          {
+            user_id: state.user_id,
+            start_date: state.start_date,
+            end_date: state.end_date,
+          },
+          { headers }
+        )
+        .then((response) => {
+          console.log(response);
+          setPrevOrderList(response);
+
+          console.log("조회 성공");
+        })
+        .catch((err) => console.log(err.response));
+    };
+    getPrevOrderList();
+  };
+
   //etc
   //상세보기    detail
-  const storeList = [
-    {
-      id: 1,
-      store_name: "aa분식",
-      category: "분식",
-      item: "떡볶이",
-      store_img: "https://dummyimage.com/600x400/000/0011ff.jpg&text=test",
-      rating: 3,
-    },
-  ];
 
   return (
     <>
@@ -157,7 +152,11 @@ const PrevOrder = () => {
                 />
               </DateRangePicker>
             )}
-            <div type="button" className="search_btn btn -regular">
+            <div
+              type="button"
+              className="search_btn btn -regular"
+              onClick={handleSearch}
+            >
               조회
             </div>
           </InputDate>
@@ -186,10 +185,10 @@ const PrevOrder = () => {
             </Col>
           </Row>
           <ListGroup>
-            {storeList.map((item) => {
+            {prevOrderList.map((item) => {
               return (
                 <PrevOrderList
-                  key={item.itemId}
+                  // key={item.itemId}
                   item={item}
                   // handlePlusModal={handlePlusModal}
                   // handleMinusModal={handleMinusModal}
@@ -213,6 +212,9 @@ const PrevOrderWrapper = styled.div`
   align-items: center;
   width: 85%;
   top: 20%;
+  .fs-1 {
+    margin-bottom: 12px;
+  }
 `;
 
 const DateRangePicker = styled.div``;
