@@ -10,10 +10,12 @@ const MenuListEL = ({
   handleMinusModal,
   deleteMenu,
 }) => {
+  console.log("key : " + key)
+  console.log("itemId : " + item.itemId)
   return (
     <>
       <ListGroup.Item className="d-inline-flex align-items-center">
-        <Col>{key}</Col>
+        <Col>{item.itemId}</Col>
         <Col>{item.itemName}</Col>
         <Col>{item.price}</Col>
         {/* <Col>등록</Col> */}
