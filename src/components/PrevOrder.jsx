@@ -5,10 +5,11 @@ import axios from "axios";
 import PrevOrderList from "./PrevOrderList";
 import DatePicker from "react-datepicker";
 import { DateRange } from "react-date-range";
-import { addDays, startOfWeek } from "date-fns";
+import { addDays, format, startOfWeek } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { ko } from "date-fns/locale";
+import { getYear, getMonth, getDate } from "date-fns";
 // import Modal from "./Modal";
 // import "./Modal.scss";
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -16,21 +17,14 @@ import { IoMdArrowDropdown } from "react-icons/io";
 const PrevOrder = () => {
   // const url =
   // "https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=15";
-  const url = `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=15`;
-
+  const url = `http://localhost:8000/order-service/orders/v1/owner/prev-order?page=0&size=10`;
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
   const [prevOrderList, setPrevOrderList] = useState([]);
-  const [state, setState] = useState({
-    user_id: 0,
-    start_date: "",
-    end_date: "",
-  });
 
   const headers = {
     Authorization: `Bearer ${authorization}`,
   };
-  console.log(state);
 
   //datePicker
 
@@ -48,80 +42,53 @@ const PrevOrder = () => {
     setStartDate(ranges.selection.startDate);
     setEndDate(ranges.selection.endDate);
   };
-  // 날짜 함수
-  function leftPad(value) {
-    if (value >= 10) {
-      return value;
-    }
-    return `0${value}`;
-  }
 
-  // 날짜 함수
-  function toStringByFormatting(source, delimiter = "-") {
-    const year = source.getFullYear();
-    const month = leftPad(source.getMonth() + 1);
-    const day = leftPad(source.getDate());
-    return [year, month, day].join(delimiter);
-  }
+  // // 날짜 함수
+  // function leftPad(value) {
+  //   if (value >= 10) {
+  //     return value;
+  //   }
+  //   return `0${value}`;
+  // }
 
-  const sDate = toStringByFormatting(startDate);
-  const eDate = toStringByFormatting(endDate); // ex)2021-04-24
-  const sDateKo =
-    sDate.split("-")[0] +
-    "년 " +
-    sDate.split("-")[1] +
-    "월 " +
-    sDate.split("-")[2] +
-    "일 ";
-  const eDateKo =
-    eDate.split("-")[0] +
-    "년 " +
-    eDate.split("-")[1] +
-    "월 " +
-    eDate.split("-")[2] +
-    "일 ";
+  // // 날짜 함수
+  // function toStringByFormatting(source, delimiter = "-") {
+  //   const year = source.getFullYear();
+  //   const month = leftPad(source.getMonth() + 1);
+  //   const day = leftPad(source.getDate());
+  //   return [year, month, day].join(delimiter);
+  // }
 
-  console.log("sDate : " + sDate);
-  console.log("eDate : " + eDate);
+  // const sDate = toStringByFormatting(startDate);
+  // const eDate = toStringByFormatting(endDate); // ex)2021-04-24
 
-  if (!sDate == eDate) {
-    console.log("modal close");
-  } else {
-    console.log("modal open");
-  }
+  const sData = format(startDate, "yyyy-MM-dd");
+  const eData = format(endDate, "yyyy-MM-dd");
+  console.log("userId : " + userId);
+  console.log("sData : " + sData);
+  console.log("eData : " + eData);
 
-  const handleSearch = async () => {
-    setState({
-      ...state,
-      user_id: userId,
-      start_date: sDate,
-      end_date: eDate,
-    });
-    const getPrevOrderList = async () => {
-      console.log("state : " + state);
-      await axios
-        .post(
-          url,
-          {
-            user_id: state.user_id,
-            start_date: state.start_date,
-            end_date: state.end_date,
-          },
-          { headers }
-        )
-        .then((response) => {
-          console.log(response);
-          setPrevOrderList(response);
+  const data = {
+    user_id: userId,
+    start_date: sData,
+    end_date: eData,
+  };
+  console.log(data);
 
-          console.log("조회 성공");
-        })
-        .catch((err) => console.log(err.response));
-    };
-    getPrevOrderList();
+  const getPrevOrderList = async () => {
+    await axios
+      .post(url, data, { headers })
+      .then((response) => {
+        // setPrevOrderList();
+        console.log(response);
+      })
+      .catch((err) => console.log(err.response));
   };
 
-  //etc
-  //상세보기    detail
+  const handleSearch = () => {
+    console.log("Post 시작");
+    getPrevOrderList();
+  };
 
   return (
     <>
@@ -137,7 +104,7 @@ const PrevOrder = () => {
               }}
             >
               <div className="showDateRange btn -regular">
-                {sDateKo} - {eDateKo} <IoMdArrowDropdown />
+                {sData} ~ {eData} <IoMdArrowDropdown />
               </div>
             </div>
             {showDate && (
