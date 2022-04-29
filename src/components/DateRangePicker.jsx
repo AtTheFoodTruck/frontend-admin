@@ -13,6 +13,7 @@ const DatePicker = () => {
       selected={startDate}
       onChange={(date) => setStartDate(date)}
       customInput={<ExampleCustomInput />}
+      // showDropdowns={true}
     />
   );
 };

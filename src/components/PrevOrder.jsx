@@ -4,29 +4,15 @@ import styled from "styled-components";
 import axios from "axios";
 import PrevOrderList from "./PrevOrderList";
 import DatePicker from "react-datepicker";
-import { DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import { addDays } from "date-fns";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { ko } from "date-fns/locale";
 // import Modal from "./Modal";
 // import "./Modal.scss";
+import { IoMdArrowDropdown } from "react-icons/io";
 
-const PrevOrderWrapper = styled.div`
-  position: absolute;
-  align-items: center;
-  width: 85%;
-  top: 20%;
-`;
-
-const InputDate = styled.div`
-  label {
-    font-size: 12px;
-  }
-  .startDate {
-    padding: 5px;
-    :hover {
-      cursor: pointer;
-    }
-  }
-`;
 const PrevOrder = () => {
   const url = `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=15`;
 
@@ -104,7 +90,30 @@ const PrevOrder = () => {
   // 최초 페이지 렌더링
   useEffect(() => {}, []);
 
-  const nowDate = toStringByFormatting(new Date()); // ex)2021-04-24
+  const sDate = toStringByFormatting(startDate);
+  const eDate = toStringByFormatting(endDate); // ex)2021-04-24
+  const sDateKo =
+    sDate.split("-")[0] +
+    "년 " +
+    sDate.split("-")[1] +
+    "월 " +
+    sDate.split("-")[2] +
+    "일 ";
+  const eDateKo =
+    eDate.split("-")[0] +
+    "년 " +
+    eDate.split("-")[1] +
+    "월 " +
+    eDate.split("-")[2] +
+    "일 ";
+
+  console.log("sDate : " + sDate);
+  console.log("eDate : " + eDate);
+  if (!sDate == eDate) {
+    console.log("modal close");
+  } else {
+    console.log("modal open");
+  }
 
   //etc
   //상세보기    detail
@@ -118,8 +127,7 @@ const PrevOrder = () => {
       rating: 3,
     },
   ];
-  console.log("startDate : " + startDate);
-  console.log("endDate : " + endDate);
+
   return (
     <>
       <PrevOrderWrapper>
@@ -127,19 +135,32 @@ const PrevOrder = () => {
           <p className="fs-1">이전 주문</p>
 
           <InputDate className="inputDate" action="https://example.com">
-            <label>시작일 - 종료일</label>
-            <div className="startDate" onClick={() => setShowDate(!showDate)}>
-              {/* 삼항연산자로  */}
-              {startDate} - {endDate}
+            <div
+              className="dateWrapper"
+              onClick={() => {
+                setShowDate(!showDate);
+              }}
+            >
+              <div className="showDateRange btn -regular">
+                {sDateKo} - {eDateKo} <IoMdArrowDropdown />
+              </div>
+            </div>
+            {showDate && (
+              <DateRangePicker className="DateRangePicker">
+                <DateRange
+                  ranges={[selectionRange]}
+                  onChange={handleSelection}
+                  rangeColors={["black"]}
+                  color="black"
+                  locale={ko}
+                  startDatePlaceholder="Early"
+                />
+              </DateRangePicker>
+            )}
+            <div type="button" className="search_btn btn -regular">
+              조회
             </div>
           </InputDate>
-          {showDate && (
-            <DateRangePicker
-              ranges={[selectionRange]}
-              onChange={handleSelection}
-              onBlur
-            />
-          )}
 
           <Row className="mt-5">
             <Col className="d-flex justify-content-center p-0">
@@ -186,3 +207,108 @@ const PrevOrder = () => {
 };
 
 export default PrevOrder;
+
+const PrevOrderWrapper = styled.div`
+  position: absolute;
+  align-items: center;
+  width: 85%;
+  top: 20%;
+`;
+
+const DateRangePicker = styled.div``;
+const InputDate = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  .btn {
+    display: flex;
+    //overflow: hidden;
+
+    font-family: "Do Hyeon", sans-serif;
+    cursor: pointer;
+    user-select: none;
+    transition: all 150ms linear;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none !important;
+    text-transform: none;
+    text-transform: capitalize;
+    word-spacing: 1.5px;
+    color: #fff;
+    border: 0 none;
+    border-radius: 36px;
+
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.3;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 160px;
+
+    box-shadow: 2px 5px 10px #e4e4e4;
+
+    &:hover {
+      transition: all 150ms linear;
+
+      opacity: 0.85;
+    }
+
+    &:active {
+      transition: all 150ms linear;
+      opacity: 0.75;
+    }
+
+    &:focus {
+      outline: 1px dotted #959595;
+      outline-offset: -4px;
+    }
+  }
+  .showDateRange {
+    margin-right: 18px;
+    padding: 6px 20px;
+  }
+  .search_btn {
+    display: inline-block;
+    // margin: 8px;
+    padding: 8px 1px;
+  }
+
+  .btn.-regular {
+    color: #202129;
+    background-color: #f2f2f2;
+
+    &:hover {
+      color: #202129;
+      background-color: #e1e2e2;
+      opacity: 1;
+    }
+
+    &:active {
+      background-color: #d5d6d6;
+      opacity: 1;
+    }
+  }
+
+  label {
+    font-size: 12px;
+  }
+  .dateWrapper {
+    display: flex;
+    justify-content: flex-end;
+    // padding: 18px;
+    :hover {
+      cursor: pointer;
+    }
+  }
+  .DateRangePicker {
+    position: absolute;
+    z-index: 9999;
+
+    border-radius: 8px;
+  }
+`;

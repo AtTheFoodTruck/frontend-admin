@@ -28,6 +28,7 @@ const DatePickerComponent = ({
     setSearchDateString(dateToString(startDate));
     setSelectedEndDateString(dateToString(endDate));
   }, [startDate, endDate]);
+
   return (
     <DatePicker
       selected={startDate}
