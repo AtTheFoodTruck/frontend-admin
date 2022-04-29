@@ -29,14 +29,14 @@ const [arrayLength, setArrayLength] = useState(0);
   async function getMenuList() {
     const foodtruck = await axios
       .get(
-        `https://apifood.blacksloop.com/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
-        // `http://localhost:8000/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
+        // `https://apifood.blacksloop.com/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
+        `http://localhost:8000/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
         { headers }
       )
       .then((res) => {
+        console.log(res);
         console.log("최초 렌더링 api 호출");
         setMenuList(res.data.data.itemsDto);
-        console.log(res.data.data.itemsDto);
       })
       .catch((err) => console.log(err));
   }
@@ -117,31 +117,17 @@ const [arrayLength, setArrayLength] = useState(0);
           {/* <Col>itemImg</Col> */}
         </Row>
         <ListGroup>
-          { arrayLength > 0 ? (
-            menulist.map((item) => {
-              return (
-                <MenuListEL
-                  key={item.itemId}
-                  item={item}
-                  // handlePlusModal={handlePlusModal}
-                  handleMinusModal={handleMinusModal}
-                  deleteMenu={deleteMenu}
-                />
-              );
-            })) : (
-                <ListGroup.Item className="d-inline-flex align-items-center">
-                <Col></Col>
-                <Col></Col>
-                <Col></Col>
-                <Col>
-                  <AiFillEdit />
-                </Col>
-                <Col>
-                  <TiDelete />
-                </Col>
-              </ListGroup.Item>
-            )
-          }
+          {menulist.map((item) => {
+            return (
+              <MenuListEL
+                key={item.itemId}
+                item={item}
+                handlePlusModal={handlePlusModal}
+                handleMinusModal={handleMinusModal}
+                deleteMenu={deleteMenu}
+              />
+            );
+          })}
         </ListGroup>
       </Container>
       {/* {openPlusModal && <Modal_copy handleModal={handlePlusModal} />}

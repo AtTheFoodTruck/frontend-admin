@@ -4,7 +4,6 @@ import { AiFillPlusCircle, AiFillEdit } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
 
 const MenuListEL = ({
-  key,
   item,
   // handlePlusModal,
   handleMinusModal,
@@ -13,7 +12,7 @@ const MenuListEL = ({
   return (
     <>
       <ListGroup.Item className="d-inline-flex align-items-center">
-        <Col>{key}</Col>
+        <Col>{item.itemId}</Col>
         <Col>{item.itemName}</Col>
         <Col>{item.price}</Col>
         {/* <Col>등록</Col> */}
