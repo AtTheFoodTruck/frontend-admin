@@ -135,24 +135,25 @@ const StoreRegister = () => {
 
   const navigate = useNavigate();
 
-  // 메일 입력시 상태값 변경
-
-  // //TODO 회원 가입
+  // //상점 등록
   async function onClickJoin(e) {
     e.preventDefault();
     if (store === "") {
       alert("상점 이름을 입력해주세요");
     } else if (phone === "") {
       alert("핸드폰 번호 입력해주세요");
-    } else if (notice === false) {
+    } else if (notice === "") {
       alert("공지사항을 입력해주세요");
-    } else if (!(store && phone && notice)) {
+    } else if (cate == null) {
+      alert("카테고리를 선택해주세요");
+    } else if (!(store && phone && notice && cate)) {
       alert("양식에 맞게 다시 기입해주세요");
     } else {
       axios
         // .post("https://apifood.blacksloop.com/item-service/items/v1/owner/stores", {
+        // .post("http://localhost:8000/item-service/items/v1/owner/stores", {
         .post(
-          "https://apifood.blacksloop.com/item-service/items/v1/owner/stores",
+          "http://localhost:8000/item-service/items/v1/owner/stores",
           {
             user_id: userId,
             store_name: store,
@@ -176,11 +177,11 @@ const StoreRegister = () => {
         .then(function (res) {
           if (res.data.result === "success") {
             alert("상점 등록 성공");
-            onReset();
-            setCate(false);
+            navigate("/login", { replace: true });
           } else {
             alert("상점 등록에 실패하였습니다. 관리자에게 문의해주세여");
-            navigate("/", { replace: true });
+            // setCate(false);
+            onReset();
           }
         })
         .catch((err) => console.log("return error" + err));
@@ -188,7 +189,7 @@ const StoreRegister = () => {
   }
 
   //카테고리
-  const [cate, setCate] = useState();
+  const [cate, setCate] = useState(null);
   const handlecate = (e) => {
     console.log(`선택한 radio 값 : ${e.target.value}`);
 
@@ -299,10 +300,9 @@ const StoreRegister = () => {
               <input
                 className="form-check-input"
                 type="radio"
-                name={item.name}
+                name="storeRadio"
                 id={item.name}
                 value={item.name}
-                checked={cate === item.name}
                 onChange={handlecate}
               />
             </div>
