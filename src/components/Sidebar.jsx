@@ -1,57 +1,49 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaHome, FaUser, FaBars, FaFileAlt, FaSave } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
-import { BiAnalyse, BiSearch, BiCog } from "react-icons/bi";
-import { BsCartCheck } from "react-icons/bs";
-import { GrLogout } from "react-icons/gr";
+import { BiSearch } from "react-icons/bi";
+import { BsCartCheck, BsCardChecklist } from "react-icons/bs";
+import {
+  AiOutlineLogout,
+  AiOutlineCheckCircle,
+  AiFillBackward,
+} from "react-icons/ai";
+
 import { Link, NavLink } from "react-router-dom";
 
-const routes = [
+let isAuthorized = localStorage.getItem("Authorization");
+
+const _routes = [
   {
     path: "/",
-    name: "Home",
+    name: "홈",
     icon: <FaHome />,
   },
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   icon: <FaUser />,
-  // },
   {
-    path: "/receive-order",
-    name: "Receive-order",
-    icon: <MdMessage />,
+    path: "/store-Register",
+    name: "상점 등록",
+    icon: <AiOutlineCheckCircle />,
   },
   {
-    path: "/menu-list",
-    name: "Menu-list",
+    path: "/receive-order",
+    name: "주문",
     icon: <BsCartCheck />,
   },
   {
-    path: "/fileManager",
-    name: "FileManager",
-    icon: <FaFileAlt />,
+    path: "/menu-list",
+    name: "메뉴 관리",
+    icon: <BsCardChecklist />,
   },
   {
-    path: "/order",
-    name: "Order",
-    icon: <BiAnalyse />,
-  },
-  {
-    path: "/saved",
-    name: "Saved",
-    icon: <FaSave />,
-  },
-  {
-    path: "/setting",
-    name: "Setting",
-    icon: <BiCog />,
+    path: "/prev-order",
+    name: "이전 주문",
+    icon: <AiFillBackward />,
   },
 ];
 
 const Sidebar = ({ children }) => {
-  let isAuthorized = localStorage.getItem("Authorization");
+  const [routes, setRoutes] = useState(_routes);
   const onClickLogout = () => {
     localStorage.removeItem("Authorization");
     localStorage.removeItem("userId");
@@ -141,46 +133,59 @@ const Sidebar = ({ children }) => {
               )}
             </AnimatePresence>
           </div>
-          <AnimatePresence>
-            {isOpen &&
-              (!isAuthorized ? (
-                <>
-                  <motion.div
-                    variants={showAnimation}
-                    initial="hidden"
-                    animate="show"
-                    exit="hidden"
-                    className="link link-button-login"
-                  >
-                    <FaUser className="icon" />
-
-                    <Link
-                      variants={showAnimation}
-                      className="link_text link-button-login"
-                      to="/login"
-                    >
-                      login
-                    </Link>
-                  </motion.div>
-                </>
-              ) : (
-                <>
-                  <motion.div
-                    variants={showAnimation}
-                    initial="hidden"
-                    animate="show"
-                    exit="hidden"
-                    onClick={onClickLogout}
-                    className="link link_text link-button-logout"
-                  >
-                    <GrLogout />
-                    logout
-                  </motion.div>
-                </>
-              ))}
-          </AnimatePresence>
 
           <section className="routes">
+            {isOpen ? (
+              !isAuthorized ? (
+                <NavLink to={"/login"} className="link">
+                  <div className="icon">
+                    <FaUser />
+                  </div>
+                  <AnimatePresence>
+                    <motion.div
+                      variants={showAnimation}
+                      initial="hidden"
+                      animate="show"
+                      exit="hidden"
+                      className="link_text"
+                    >
+                      로그인
+                    </motion.div>
+                  </AnimatePresence>
+                </NavLink>
+              ) : (
+                <NavLink to={"/logout"} className="link">
+                  <div className="icon">
+                    <AiOutlineLogout />
+                  </div>
+                  <AnimatePresence>
+                    <motion.div
+                      variants={showAnimation}
+                      initial="hidden"
+                      animate="show"
+                      exit="hidden"
+                      onClick={onClickLogout}
+                      className="link_text"
+                    >
+                      로그아웃
+                    </motion.div>
+                  </AnimatePresence>
+                </NavLink>
+              )
+            ) : !isAuthorized ? (
+              <NavLink to={"/login"} className="link">
+                <div className="icon">
+                  <FaUser />
+                </div>
+              </NavLink>
+            ) : (
+              <NavLink to={"/logout"} className="link">
+                <div className="icon" onClick={onClickLogout}>
+                  <AiOutlineLogout />
+                </div>
+              </NavLink>
+            )}
+
             {routes.map((route) => (
               <NavLink to={route.path} key={route.name} className="link">
                 <div className="icon">{route.icon}</div>

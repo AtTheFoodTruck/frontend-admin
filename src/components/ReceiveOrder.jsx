@@ -3,6 +3,8 @@ import { Container, ListGroup, Col, Button, Row } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import ReceiveOrderList from "./ReceiveOrderList";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
@@ -18,6 +20,7 @@ const ReceiveOrder = () => {
   const [acceptType, setAcceptType] = useState(false);
   const [rejectType, setRejectType] = useState(true);
   const [completeType, setCompleteType] = useState(true);
+  const size = 10;
   // 유저 정보
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
@@ -25,21 +28,37 @@ const ReceiveOrder = () => {
     Authorization: `Bearer ${authorization}`,
   };
 
-  const size = 10;
+  // 날짜 함수
+  function leftPad(value) { 
+    if (value >= 10) { 
+      return value; 
+    } 
+    return `0${value}`; 
+  } 
+
+  // 날짜 함수
+  function toStringByFormatting(source, delimiter = '-') {
+     const year = source.getFullYear(); 
+     const month = leftPad(source.getMonth() + 1); 
+     const day = leftPad(source.getDate()); 
+     return [year, month, day].join(delimiter); 
+  }
 
   // 최초 페이지 렌더링
   useEffect(() => {
     getOrderList();
   }, []);
 
+  const nowDate = toStringByFormatting(new Date()); // ex)2021-04-24
+
   // 주문 접수 클릭 이벤트
-  async function acceptOrder() {
+  async function acceptOrder(orderId) {
     await axios
       .patch(
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
         // `http://localhost:8000/order-service/orders/v1/owner/accept`,
         {
-          order_id: 1,
+          order_id: orderId,
         },
         {
           headers,
@@ -56,13 +75,13 @@ const ReceiveOrder = () => {
   }
 
   // 주문 거절 클릭 이벤트
-  async function rejectOrder() {
+  async function rejectOrder(orderId) {
     await axios
       .patch(
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
         // `http://localhost:8000/order-service/orders/v1/owner/reject`,
         {
-          order_id: 1,
+          order_id: orderId,
         },
         {
           headers,
@@ -84,13 +103,13 @@ const ReceiveOrder = () => {
   }
 
   // 조리 완료 클릭 이벤트
-  async function completeOrder() {
+  async function completeOrder(orderId) {
     await axios
       .patch(
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
         // `http://localhost:8000/order-service/orders/v1/owner/complete`,
         {
-          order_id: 1,
+          order_id: orderId,
         },
         {
           headers,
@@ -118,8 +137,8 @@ const ReceiveOrder = () => {
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
         // `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
         {
-          user_id: 2,
-          order_date: "2022-04-25",
+          user_id: userId,
+          order_date: nowDate,
         },
         { headers }
       )
@@ -137,19 +156,19 @@ const ReceiveOrder = () => {
         <p className="fs-1">주문접수</p>
         <Row className=" mt-5">
           {/* <Col lg={3}></Col> */}
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>주문번호</h5>
           </Col>
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>주문시간</h5>
           </Col>
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>주문상태</h5>
           </Col>
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>주문자</h5>
           </Col>
-          <Col className="d-flex justify-content-start p-0">
+          <Col className="d-flex justify-content-center p-0">
             <h5>아이템</h5>
           </Col>
         </Row>

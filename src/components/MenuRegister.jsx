@@ -121,6 +121,7 @@ const MenuRegister = () => {
           alert("메뉴 등록 성공");
           onReset()
         }else {
+          console.log(res);
           alert("메뉴 등록에 실패하였습니다. 관리자에게 문의해주세여");
         }
       })

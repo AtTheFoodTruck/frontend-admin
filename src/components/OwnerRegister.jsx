@@ -3,6 +3,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
+const LoginWrapper = styled.div`
+  position: absolute;
+  align-items: center;
+  width: 20em;
+  // top: 50%;
+  left: 43%;
+  border: 1px white solid;
+
+  h1 {
+    font-size: 70px;
+    text-align: center;
+  }
+`;
+
 const MemberRegisterContainer = styled.div`
   padding-top: 250px;
   width: 25em;
@@ -338,15 +352,16 @@ const OwnerRegister = () => {
       alert("양삭애 맞게 다시 기입해주세요");
     } else {
       axios
-        .post("https://apifood.blacksloop.com/user-service/users/v1/join", {
+        .post("https://apifood.blacksloop.com/user-service/users/v1/owner/join", {
           email: inputEmail,
           username: inputUsername,
           password: inputPw,
           phone_num: inputPhonenumber,
+          b_no: bNumber
         })
         .then(function (response) {
           if (response.data.result === "fail") {
-            alert(response.data.error[0].message);
+            alert(response.data.message);
           } else {
             alert("가입 성공");
             navigate("/login", { replace: true });
@@ -359,135 +374,137 @@ const OwnerRegister = () => {
   }
 
   return (
-    <MemberRegisterContainer>
-      <form className="container">
-        <div className="head">
-          <h1>Sign up</h1>
-        </div>
-
-        <div className="email">
-          <div className="form-floating">
-            <input
-              type="text"
-              name="input_email"
-              value={inputEmail}
-              className="form-control"
-              id="input_email"
-              placeholder="아이디를 입력하세요."
-              onChange={handleInputEmail}
-              onClick={handleInputEmailClick}
-            />
-            <label for="floatingInput">{emailMessage}</label>
+    <LoginWrapper>
+      <MemberRegisterContainer>
+        <form className="container">
+          <div className="head">
+            <h1>Sign up</h1>
           </div>
-        </div>
 
-        <div className="mailDuplicate">
-          <button
-            type="submit"
-            className=" btn btn-lg btn-outline-secondary"
-            onClick={mailDuplicateCheck}
-          >
-            check
-          </button>
-        </div>
-
-        <div className="password">
-          <div className="form-floating">
-            <input
-              type="password"
-              name="input_pw"
-              value={inputPw}
-              className="form-control"
-              id="input_pw"
-              placeholder="비밀번호를 입력하세요."
-              onChange={handleInputPw}
-            />
-            <label for="floatingPassword">{passwordMessage}</label>
+          <div className="email">
+            <div className="form-floating">
+              <input
+                type="text"
+                name="input_email"
+                value={inputEmail}
+                className="form-control"
+                id="input_email"
+                placeholder="아이디를 입력하세요."
+                onChange={handleInputEmail}
+                onClick={handleInputEmailClick}
+              />
+              <label for="floatingInput">{emailMessage}</label>
+            </div>
           </div>
-        </div>
 
-        <div className="passwordVerification">
-          <div className="form-floating">
-            <input
-              type="password"
-              name="input_pwVerification"
-              value={inputpwVerification}
-              className="form-control"
-              id="input_pwVerification"
-              placeholder="비밀번호 확인 입력하세요."
-              onChange={onChangePasswordConfirm}
-            />
-            <label for="floatingPassword">{passwordConfirmMessage}</label>
+          <div className="mailDuplicate">
+            <button
+              type="submit"
+              className=" btn btn-lg btn-outline-secondary"
+              onClick={mailDuplicateCheck}
+            >
+              check
+            </button>
           </div>
-        </div>
 
-        <div className="username">
-          <div className="form-floating">
-            <input
-              type="text"
-              name="input_username"
-              value={inputUsername}
-              className="form-control"
-              id="input_username"
-              placeholder="이름을 입력하세요."
-              onChange={handleInputUsername}
-              onClick={handleInputUsernameClick}
-            />
-            <label for="floatingPassword">{nameMessage}</label>
+          <div className="password">
+            <div className="form-floating">
+              <input
+                type="password"
+                name="input_pw"
+                value={inputPw}
+                className="form-control"
+                id="input_pw"
+                placeholder="비밀번호를 입력하세요."
+                onChange={handleInputPw}
+              />
+              <label for="floatingPassword">{passwordMessage}</label>
+            </div>
           </div>
-        </div>
 
-        <div className="usernameDuplicate">
-          <button
-            type="submit"
-            className=" btn btn-lg btn-outline-secondary"
-            onClick={usernameDuplicateCheck}
-          >
-            check
-          </button>
-        </div>
-
-        <div className="phonenumber">
-          <div className="form-floating">
-            <input
-              type="text"
-              name="input_phonenumber"
-              value={inputPhonenumber}
-              className="form-control"
-              id="input_phonenumber"
-              placeholder="휴대전화 번호를 입력하세요."
-              onChange={handleInputPhonenumber}
-            />
-            <label for="floatingPassword">{phoneMessage}</label>
+          <div className="passwordVerification">
+            <div className="form-floating">
+              <input
+                type="password"
+                name="input_pwVerification"
+                value={inputpwVerification}
+                className="form-control"
+                id="input_pwVerification"
+                placeholder="비밀번호 확인 입력하세요."
+                onChange={onChangePasswordConfirm}
+              />
+              <label for="floatingPassword">{passwordConfirmMessage}</label>
+            </div>
           </div>
-        </div>
 
-        <div className="bnumber">
-          <div className="form-floating">
-            <input
-              type="text"
-              name="input_bnumber"
-              value={bNumber}
-              className="form-control"
-              id="input_bnumber"
-              placeholder="사업자 번호를 입력하세요."
-              onChange={handleInputBnumber}
-            />
-            <label for="floatingPassword">{bNumberMessage}</label>
+          <div className="username">
+            <div className="form-floating">
+              <input
+                type="text"
+                name="input_username"
+                value={inputUsername}
+                className="form-control"
+                id="input_username"
+                placeholder="이름을 입력하세요."
+                onChange={handleInputUsername}
+                onClick={handleInputUsernameClick}
+              />
+              <label for="floatingPassword">{nameMessage}</label>
+            </div>
           </div>
-        </div>
 
-        <div className="join">
-          <button
-            type="submit"
-            className=" btn btn-lg btn-outline-secondary"
-            onClick={onClickJoin}
-          >
-            Join
-          </button>
-        </div>
-      </form>
-    </MemberRegisterContainer>
+          <div className="usernameDuplicate">
+            <button
+              type="submit"
+              className=" btn btn-lg btn-outline-secondary"
+              onClick={usernameDuplicateCheck}
+            >
+              check
+            </button>
+          </div>
+
+          <div className="phonenumber">
+            <div className="form-floating">
+              <input
+                type="text"
+                name="input_phonenumber"
+                value={inputPhonenumber}
+                className="form-control"
+                id="input_phonenumber"
+                placeholder="휴대전화 번호를 입력하세요."
+                onChange={handleInputPhonenumber}
+              />
+              <label for="floatingPassword">{phoneMessage}</label>
+            </div>
+          </div>
+
+          <div className="bnumber">
+            <div className="form-floating">
+              <input
+                type="text"
+                name="input_bnumber"
+                value={bNumber}
+                className="form-control"
+                id="input_bnumber"
+                placeholder="사업자 번호를 입력하세요."
+                onChange={handleInputBnumber}
+              />
+              <label for="floatingPassword">{bNumberMessage}</label>
+            </div>
+          </div>
+
+          <div className="join">
+            <button
+              type="submit"
+              className=" btn btn-lg btn-outline-secondary"
+              onClick={onClickJoin}
+            >
+              Join
+            </button>
+          </div>
+        </form>
+      </MemberRegisterContainer>
+    </LoginWrapper>
   );
 };
 
