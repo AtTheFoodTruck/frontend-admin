@@ -106,14 +106,13 @@ const PrevOrder = () => {
     "월 " +
     eDate.split("-")[2] +
     "일 ";
-  // console.log("sDate : " + sDate);
 
-  // console.log("eDate : " + eDate);
-  // console.log(sDate == eDate);
+  console.log("sDate : " + sDate);
+  console.log("eDate : " + eDate);
   if (!sDate == eDate) {
-    console.log("modal open");
-  } else {
     console.log("modal close");
+  } else {
+    console.log("modal open");
   }
 
   //etc
