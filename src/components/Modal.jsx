@@ -44,6 +44,7 @@ const Modal = ({ handleModal }) => {
       description: "",
       price: "",
     });
+    navigate(0);
   };
 
   // S3 환경 설정
@@ -122,7 +123,6 @@ const Modal = ({ handleModal }) => {
           console.log(res);
           alert("메뉴 등록 성공");
           onReset();
-          navigate("/menu-list", { replace: true });
         } else {
           console.log(res);
           // alert("메뉴 등록에 실패하였습니다. 관리자에게 문의해주세여");

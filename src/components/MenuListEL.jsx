@@ -4,14 +4,11 @@ import { AiFillPlusCircle, AiFillEdit } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
 
 const MenuListEL = ({
-  key,
   item,
   // handlePlusModal,
   handleMinusModal,
   deleteMenu,
 }) => {
-  console.log("key : " + key)
-  console.log("itemId : " + item.itemId)
   return (
     <>
       <ListGroup.Item className="d-inline-flex align-items-center">
