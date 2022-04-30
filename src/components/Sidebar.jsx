@@ -4,6 +4,7 @@ import { FaHome, FaUser, FaBars, FaFileAlt, FaSave } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
 import { BsCartCheck, BsCardChecklist } from "react-icons/bs";
+import { RiVipCrown2Line } from "react-icons/ri";
 import {
   AiOutlineLogout,
   AiOutlineCheckCircle,
@@ -19,6 +20,11 @@ const _routes = [
     path: "/",
     name: "홈",
     icon: <FaHome />,
+  },
+  {
+    path: "/owner-register",
+    name: "회원 가입",
+    icon: <RiVipCrown2Line />,
   },
   {
     path: "/store-register",
@@ -137,7 +143,7 @@ const Sidebar = ({ children }) => {
           <section className="routes">
             {isOpen ? (
               !isAuthorized ? (
-                <NavLink to={"/login"} className="link">
+                <NavLink to={"/"} className="link">
                   <div className="icon">
                     <FaUser />
                   </div>

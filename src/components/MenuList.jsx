@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import MenuListEL from "./MenuListEL";
@@ -47,11 +47,14 @@ const MenuList = () => {
         item_id: itemId,
       };
       await axios
-      .delete(`https://apifood.blacksloop.com/item-service/items/v1/owner/item`, {
-        // .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
-          headers,
-          data,
-        })
+        .delete(
+          `https://apifood.blacksloop.com/item-service/items/v1/owner/item`,
+          {
+            // .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
+            headers,
+            data,
+          }
+        )
         .then((res) => {
           console.log(res);
           if (res.data.result === "success") {

@@ -177,7 +177,7 @@ const StoreRegister = () => {
         .then(function (res) {
           if (res.data.result === "success") {
             alert("상점 등록 성공");
-            navigate("/login", { replace: true });
+            navigate("/", { replace: true });
           } else {
             alert("상점 등록에 실패하였습니다. 관리자에게 문의해주세여");
             // setCate(false);

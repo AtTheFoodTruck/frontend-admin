@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Container, ListGroup, Col, Button, Row } from "react-bootstrap";
+import { Container, ListGroup, Col, Button, Row, Card } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import ReceiveOrderList from "./ReceiveOrderList";
+import ReceiveOrderDashBoard from "./ReceiveOrderDashBoard";
 
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
   align-items: center;
   width: 85%;
-  top: 20%;
+  top: 30%;
+`;
+
+const StyleDashBoard = styled.div`
+  position: absolute;
+  width: 75%;
+  top: 5%;
+  margin-left: 6%;
+  margin-top: 3%;
 `;
 
 const ReceiveOrder = () => {
@@ -27,19 +36,19 @@ const ReceiveOrder = () => {
   };
 
   // 날짜 함수
-  function leftPad(value) { 
-    if (value >= 10) { 
-      return value; 
-    } 
-    return `0${value}`; 
-  } 
+  function leftPad(value) {
+    if (value >= 10) {
+      return value;
+    }
+    return `0${value}`;
+  }
 
   // 날짜 함수
-  function toStringByFormatting(source, delimiter = '-') {
-     const year = source.getFullYear(); 
-     const month = leftPad(source.getMonth() + 1); 
-     const day = leftPad(source.getDate()); 
-     return [year, month, day].join(delimiter); 
+  function toStringByFormatting(source, delimiter = "-") {
+    const year = source.getFullYear();
+    const month = leftPad(source.getMonth() + 1);
+    const day = leftPad(source.getDate());
+    return [year, month, day].join(delimiter);
   }
 
   // 최초 페이지 렌더링
@@ -149,41 +158,48 @@ const ReceiveOrder = () => {
   }
 
   return (
-    <ReceiveOrderWrapper>
-      <Container className="text-center">
-        <p className="fs-1">주문접수</p>
-        <Row className=" mt-5">
-          {/* <Col lg={3}></Col> */}
-          <Col className="d-flex justify-content-center p-0">
-            <h5>주문번호</h5>
-          </Col>
-          <Col className="d-flex justify-content-center p-0">
-            <h5>주문시간</h5>
-          </Col>
-          <Col className="d-flex justify-content-center p-0">
-            <h5>주문상태</h5>
-          </Col>
-          <Col className="d-flex justify-content-center p-0">
-            <h5>주문자</h5>
-          </Col>
-          <Col className="d-flex justify-content-center p-0">
-            <h5>아이템</h5>
-          </Col>
-        </Row>
-        <ListGroup>
-          {orderList.map((orderListItem) => (
-            <ReceiveOrderList
-              key={orderListItem.orderId}
-              orderListItem={orderListItem}
-              orderItems={orderItems}
-              acceptOrder={acceptOrder}
-              rejectOrder={rejectOrder}
-              completeOrder={completeOrder}
-            />
-          ))}
-        </ListGroup>
-      </Container>
-    </ReceiveOrderWrapper>
+    <>
+      <StyleDashBoard>
+        <Container fluid>
+          <ReceiveOrderDashBoard />
+        </Container>
+      </StyleDashBoard>
+      <ReceiveOrderWrapper>
+        <Container className="text-center">
+          <p className="fs-1">주문접수</p>
+          <Row className=" mt-5">
+            {/* <Col lg={3}></Col> */}
+            <Col className="d-flex justify-content-center p-0">
+              <h5>주문번호</h5>
+            </Col>
+            <Col className="d-flex justify-content-center p-0">
+              <h5>주문시간</h5>
+            </Col>
+            <Col className="d-flex justify-content-center p-0">
+              <h5>주문상태</h5>
+            </Col>
+            <Col className="d-flex justify-content-center p-0">
+              <h5>주문자</h5>
+            </Col>
+            <Col className="d-flex justify-content-center p-0">
+              <h5>아이템</h5>
+            </Col>
+          </Row>
+          <ListGroup>
+            {orderList.map((orderListItem) => (
+              <ReceiveOrderList
+                key={orderListItem.orderId}
+                orderListItem={orderListItem}
+                orderItems={orderItems}
+                acceptOrder={acceptOrder}
+                rejectOrder={rejectOrder}
+                completeOrder={completeOrder}
+              />
+            ))}
+          </ListGroup>
+        </Container>
+      </ReceiveOrderWrapper>
+    </>
   );
 };
 
