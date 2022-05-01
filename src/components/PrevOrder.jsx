@@ -1,65 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Col, Container, ListGroup, Row } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import PrevOrderList from "./PrevOrderList";
-import DatePicker from "react-datepicker";
 import { DateRange } from "react-date-range";
-import { addDays } from "date-fns";
+import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { ko } from "date-fns/locale";
-// import Modal from "./Modal";
-// import "./Modal.scss";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const PrevOrder = () => {
   const url = `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=15`;
 
   const authorization = localStorage.getItem("Authorization");
+  const userId = localStorage.getItem("userId");
   const [prevOrderList, setPrevOrderList] = useState([]);
-
-  const [state, setState] = useState({
-    userId: 0,
-    startData: "",
-    endData: "",
-  });
 
   const headers = {
     Authorization: `Bearer ${authorization}`,
   };
-  const getPrevOrderList = async () => {
-    // console.log("state : " + state);
-    await axios
-      .post(
-        url,
-        {
-          user_id: state.userId,
-          start_data: state.startData,
-          end_data: state.endData,
-        },
-        { headers }
-      )
-      .then((response) => {
-        setPrevOrderList(response);
-        console.log(response);
-        console.log("조회 성공");
-      })
-      .catch((err) => console.log(err.response));
-  };
-
-  //    setState({
-  //      ...state,
-  //      user_id: userId,
-  //      start_data: startData,
-  //      end_data: endData,
-  //    });
-
-  //datePicker
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [showDate, setShowDate] = useState(false);
+  const [date, setDate] = useState({
+    sdate: `${format(new Date(), "yyyy-MM-dd")}`,
+    edate: `${format(new Date(), "yyyy-MM-dd")}`,
+  });
 
   const selectionRange = {
     startDate: startDate,
@@ -71,62 +39,43 @@ const PrevOrder = () => {
     setStartDate(ranges.selection.startDate);
     setEndDate(ranges.selection.endDate);
   };
-  // 날짜 함수
-  function leftPad(value) {
-    if (value >= 10) {
-      return value;
-    }
-    return `0${value}`;
-  }
 
-  // 날짜 함수
-  function toStringByFormatting(source, delimiter = "-") {
-    const year = source.getFullYear();
-    const month = leftPad(source.getMonth() + 1);
-    const day = leftPad(source.getDate());
-    return [year, month, day].join(delimiter);
-  }
+  const sDate = format(startDate, "yyyy-MM-dd");
+  const eDate = format(endDate, "yyyy-MM-dd");
+  // console.log("userId : " + userId);
+  // console.log("sData : " + sDate);
+  // console.log("eData : " + eDate);
 
-  // 최초 페이지 렌더링
-  useEffect(() => {}, []);
+  const data = {
+    user_id: userId,
+    start_date: sDate,
+    end_date: eDate,
+  };
 
-  const sDate = toStringByFormatting(startDate);
-  const eDate = toStringByFormatting(endDate); // ex)2021-04-24
-  const sDateKo =
-    sDate.split("-")[0] +
-    "년 " +
-    sDate.split("-")[1] +
-    "월 " +
-    sDate.split("-")[2] +
-    "일 ";
-  const eDateKo =
-    eDate.split("-")[0] +
-    "년 " +
-    eDate.split("-")[1] +
-    "월 " +
-    eDate.split("-")[2] +
-    "일 ";
+  const handleConfirm = () => {
+    setDate({
+      ...date,
+      sdate: sDate,
+      edate: eDate,
+    });
+    setShowDate(!showDate);
+  };
 
-  console.log("sDate : " + sDate);
-  console.log("eDate : " + eDate);
-  if (!sDate == eDate) {
-    console.log("modal close");
-  } else {
-    console.log("modal open");
-  }
+  const getPrevOrderList = async () => {
+    console.log(data);
+    await axios
+      .post(url, data, { headers })
+      .then((response) => {
+        setPrevOrderList(response.data.data.orders);
+        console.log(response);
+      })
+      .catch((err) => console.log(err.response));
+  };
 
-  //etc
-  //상세보기    detail
-  const storeList = [
-    {
-      id: 1,
-      store_name: "aa분식",
-      category: "분식",
-      item: "떡볶이",
-      store_img: "https://dummyimage.com/600x400/000/0011ff.jpg&text=test",
-      rating: 3,
-    },
-  ];
+  const handleSearch = () => {
+    console.log("Post 시작");
+    getPrevOrderList();
+  };
 
   return (
     <>
@@ -135,29 +84,52 @@ const PrevOrder = () => {
           <p className="fs-1">이전 주문</p>
 
           <InputDate className="inputDate" action="https://example.com">
-            <div
-              className="dateWrapper"
-              onClick={() => {
-                setShowDate(!showDate);
-              }}
-            >
-              <div className="showDateRange btn -regular">
-                {sDateKo} - {eDateKo} <IoMdArrowDropdown />
+            <div className="dateWrapper">
+              <div
+                className="showDateRange btn -regular"
+                onClick={() => {
+                  setShowDate(!showDate);
+                }}
+              >
+                {date.sdate} ~ {date.edate} <IoMdArrowDropdown />
               </div>
+              {showDate && (
+                <div className="dateRangePicker">
+                  <DateRangePicker>
+                    <DateRange
+                      ranges={[selectionRange]}
+                      onChange={handleSelection}
+                      rangeColors={["black"]}
+                      color="black"
+                      locale={ko}
+                      startDatePlaceholder="Early"
+                    />
+                  </DateRangePicker>
+                  <div className="cancleAndSelect">
+                    <button
+                      className="cancel btn -regular"
+                      onClick={() => {
+                        setShowDate(!showDate);
+                      }}
+                    >
+                      취소
+                    </button>
+                    <button
+                      className="select btn -regular"
+                      onClick={handleConfirm}
+                    >
+                      확인
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-            {showDate && (
-              <DateRangePicker className="DateRangePicker">
-                <DateRange
-                  ranges={[selectionRange]}
-                  onChange={handleSelection}
-                  rangeColors={["black"]}
-                  color="black"
-                  locale={ko}
-                  startDatePlaceholder="Early"
-                />
-              </DateRangePicker>
-            )}
-            <div type="button" className="search_btn btn -regular">
+
+            <div
+              type="button"
+              className="search_btn btn -regular"
+              onClick={handleSearch}
+            >
               조회
             </div>
           </InputDate>
@@ -181,26 +153,17 @@ const PrevOrder = () => {
             <Col className="d-flex justify-content-center p-0">
               <p className="fs-5">닉네임</p>
             </Col>
-            <Col className="d-flex justify-content-center p-0">
+            {/* <Col className="d-flex justify-content-center p-0">
               <p className="fs-5">상세보기</p>
-            </Col>
+            </Col> */}
           </Row>
           <ListGroup>
-            {storeList.map((item) => {
-              return (
-                <PrevOrderList
-                  key={item.itemId}
-                  item={item}
-                  // handlePlusModal={handlePlusModal}
-                  // handleMinusModal={handleMinusModal}
-                  // deleteMenu={deleteMenu}
-                />
-              );
-            })}
+            {prevOrderList &&
+              prevOrderList.map((item) => {
+                return <PrevOrderList item={item} />;
+              })}
           </ListGroup>
         </Container>
-        {/* {openPlusModal && <Modal handleModal={handlePlusModal} />}
-      {openMinusModal && <Modal handleModal={handleMinusModal} />} */}
       </PrevOrderWrapper>
     </>
   );
@@ -213,9 +176,19 @@ const PrevOrderWrapper = styled.div`
   align-items: center;
   width: 85%;
   top: 20%;
+  .fs-1 {
+    margin-bottom: 12px;
+  }
 `;
 
-const DateRangePicker = styled.div``;
+const DateRangePicker = styled.div`
+  position: absolute;
+  z-index: 9999;
+  top: 50px;
+  left: -35px;
+  border-radius: 8px;
+  display: flex;
+`;
 const InputDate = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -248,7 +221,7 @@ const InputDate = styled.div`
 
     justify-content: center;
     align-items: center;
-    flex: 0 0 160px;
+    flex: 0 0 80px;
 
     box-shadow: 2px 5px 10px #e4e4e4;
 
@@ -269,13 +242,13 @@ const InputDate = styled.div`
     }
   }
   .showDateRange {
-    margin-right: 18px;
     padding: 6px 20px;
   }
   .search_btn {
     display: inline-block;
-    // margin: 8px;
-    padding: 8px 1px;
+    margin-left: 12px;
+    display: flex;
+    align-items: center;
   }
 
   .btn.-regular {
@@ -298,17 +271,24 @@ const InputDate = styled.div`
     font-size: 12px;
   }
   .dateWrapper {
+    position: relative;
     display: flex;
     justify-content: flex-end;
-    // padding: 18px;
-    :hover {
-      cursor: pointer;
+    .cancleAndSelect {
+      display: flex;
+      position: absolute;
+      top: 400px;
+      left: 30px;
+      .cancel {
+        flex-grow: 1;
+        margin-right: 60px;
+        padding: 10px;
+        outline: none;
+      }
+      .select {
+        flex-grow: 1;
+        outline: none;
+      }
     }
-  }
-  .DateRangePicker {
-    position: absolute;
-    z-index: 9999;
-
-    border-radius: 8px;
   }
 `;

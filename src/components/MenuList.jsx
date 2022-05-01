@@ -22,9 +22,9 @@ const MenuList = () => {
     Authorization: `Bearer ${authorization}`,
   };
   const [menulist, setMenuList] = useState([]);
-// const arrayLength = 0;
-const [arrayLength, setArrayLength] = useState(0);
-  
+  // const arrayLength = 0;
+  const [arrayLength, setArrayLength] = useState(0);
+
   // 메뉴 조회 api
   async function getMenuList() {
     const foodtruck = await axios
@@ -69,7 +69,7 @@ const [arrayLength, setArrayLength] = useState(0);
   // 최초 페이지 렌더링
   useEffect(() => {
     getMenuList();
-    setArrayLength(menulist.length)
+    setArrayLength(menulist.length);
   }, []);
 
   //modal
@@ -94,7 +94,9 @@ const [arrayLength, setArrayLength] = useState(0);
   return (
     <ReceiveOrderWrapper>
       <Container className="text-center">
-        <p className="fs-1">메뉴목록 <AiFillPlusCircle type="button" onClick={handlePlusModal} /> </p>
+        <p className="fs-1">
+          메뉴목록 <AiFillPlusCircle type="button" onClick={handlePlusModal} />{" "}
+        </p>
         <Row className="mt-5">
           <Col className="d-flex justify-content-center p-0">
             <p className="fs-5">메뉴번호</p>

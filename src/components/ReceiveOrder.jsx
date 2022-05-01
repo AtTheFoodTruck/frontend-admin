@@ -43,19 +43,19 @@ const ReceiveOrder = () => {
   // }
 
   // 날짜 함수
-  function leftPad(value) { 
-    if (value >= 10) { 
-      return value; 
-    } 
-    return `0${value}`; 
-  } 
+  function leftPad(value) {
+    if (value >= 10) {
+      return value;
+    }
+    return `0${value}`;
+  }
 
   // 날짜 함수
-  function toStringByFormatting(source, delimiter = '-') {
-     const year = source.getFullYear(); 
-     const month = leftPad(source.getMonth() + 1); 
-     const day = leftPad(source.getDate()); 
-     return [year, month, day].join(delimiter); 
+  function toStringByFormatting(source, delimiter = "-") {
+    const year = source.getFullYear();
+    const month = leftPad(source.getMonth() + 1);
+    const day = leftPad(source.getDate());
+    return [year, month, day].join(delimiter);
   }
 
   // 최초 페이지 렌더링

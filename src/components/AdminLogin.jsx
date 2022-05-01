@@ -93,6 +93,7 @@ const AdminLogin = () => {
         })
         .then(function (response) {
           console.log(response);
+
           if (response.data.result === "success") {
             setAccessToken(response.data.data.accessToken);
             setRefreshToken(response.data.data.refreshToken);
