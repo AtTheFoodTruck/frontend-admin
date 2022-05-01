@@ -18,6 +18,7 @@ const MenuRegister = () => {
     description: "",
     price: "",
   });
+
   const { menuname, description, price } = inputs; // 비구조화 할당을 통해 값 추출
   const [imgURL, setImgURL] = useState(""); // image 상태
   const [fileURL, setFileURL] = useState("img/default_image.png"); //미리보기

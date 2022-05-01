@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Container, ListGroup, Col, Button, Row } from "react-bootstrap";
+import { Container, ListGroup, Col, Button, Row, Card } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import ReceiveOrderList from "./ReceiveOrderList";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
   align-items: center;
   width: 85%;
-  top: 20%;
+  top: 30%;
+`;
+
+const StyleDashBoard = styled.div`
+  position: absolute;
+  width: 75%;
+  top: 5%;
+  margin-left: 6%;
+  margin-top: 3%;
 `;
 
 const ReceiveOrder = () => {
@@ -67,7 +74,8 @@ const ReceiveOrder = () => {
 
   // 주문 접수 클릭 이벤트
   function acceptOrder(orderId) {
-    axios.patch(
+    axios
+      .patch(
         // `https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
         {
@@ -84,7 +92,8 @@ const ReceiveOrder = () => {
           document.location.reload();
         } else {
           return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
-      }})
+        }
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -94,7 +103,8 @@ const ReceiveOrder = () => {
 
   // 주문 거절 클릭 이벤트
   function rejectOrder(orderId) {
-    axios.patch(
+    axios
+      .patch(
         // `https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
         {
@@ -111,7 +121,8 @@ const ReceiveOrder = () => {
           document.location.reload();
         } else {
           return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
-        }})
+        }
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -120,8 +131,9 @@ const ReceiveOrder = () => {
   }
 
   // 조리 완료 클릭 이벤트
-  function completeOrder (orderId) {
-    axios.patch(
+  function completeOrder(orderId) {
+    axios
+      .patch(
         // `https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
         {
@@ -138,7 +150,8 @@ const ReceiveOrder = () => {
           document.location.reload();
         } else {
           return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
-        }})
+        }
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -189,19 +202,20 @@ const ReceiveOrder = () => {
           </Col>
         </Row>
         <ListGroup>
-          {orderList && orderList.map((orderListItem) => (
-            <ReceiveOrderList
-              key={orderListItem.orderId}
-              orderListItem={orderListItem}
-              orderItems={orderItems}
-              acceptOrder={acceptOrder}
-              rejectOrder={rejectOrder}
-              completeOrder={completeOrder}
-              // acceptType={acceptType}
-              // rejectType={rejectType}
-              // completeType={completeType}
-            />
-          ))}
+          {orderList &&
+            orderList.map((orderListItem) => (
+              <ReceiveOrderList
+                key={orderListItem.orderId}
+                orderListItem={orderListItem}
+                orderItems={orderItems}
+                acceptOrder={acceptOrder}
+                rejectOrder={rejectOrder}
+                completeOrder={completeOrder}
+                // acceptType={acceptType}
+                // rejectType={rejectType}
+                // completeType={completeType}
+              />
+            ))}
         </ListGroup>
       </Container>
     </ReceiveOrderWrapper>

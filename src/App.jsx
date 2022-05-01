@@ -16,13 +16,12 @@ function App() {
     <>
       <Sidebar>
         <Routes>
-          <Route path="/" element={<DashBoard />} />
-          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/" element={<AdminLogin />} />
           <Route path="/menu-register" element={<MenuRegister />} />
           <Route path="/receive-order" element={<ReceiveOrder />} />
           <Route path="/menu-list" element={<MenuList />} />
           <Route path="/owner-register" element={<OwnerRegister />} />
-          <Route path="/store-Register" element={<StoreRegister />} />
+          <Route path="/store-register" element={<StoreRegister />} />
         </Routes>
       </Sidebar>
     </>
