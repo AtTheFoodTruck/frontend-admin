@@ -117,7 +117,7 @@ const MenuList = () => {
           {/* <Col>itemImg</Col> */}
         </Row>
         <ListGroup>
-          {menulist.map((item) => {
+          {menulist && menulist.map((item) => {
             return (
               <MenuListEL
                 key={item.itemId}
