@@ -81,7 +81,7 @@ const StoreRegister = () => {
         // .post("https://apifood.blacksloop.com/item-service/items/v1/owner/stores", {
         // .post("http://localhost:8000/item-service/items/v1/owner/stores", {
         .post(
-          "http://localhost:8000/item-service/items/v1/owner/stores",
+          "https://apifood.blacksloop.com/item-service/items/v1/owner/stores",
           {
             user_id: userId,
             store_name: store,
