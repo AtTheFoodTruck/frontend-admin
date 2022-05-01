@@ -86,9 +86,8 @@ const AdminLogin = () => {
       alert("비밀번호를 입력하세요");
     } else {
       axios
-      //TODO URL바꾸기
-        .post('https://apifood.blacksloop.com/user-service/users/v1/logins', {
-        // .post("http://localhost:8000/user-service/users/v1/logins", {
+        .post("https://apifood.blacksloop.com/user-service/users/v1/logins", {
+          //.post("http://localhost:8000/user-service/users/v1/logins", {
           email: inputId,
           password: inputPw,
         })
