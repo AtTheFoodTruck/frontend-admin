@@ -55,8 +55,8 @@ const ReceiveOrder = () => {
   async function acceptOrder(orderId) {
     await axios
       .patch(
-        `https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
-        // `http://localhost:8000/order-service/orders/v1/owner/accept`,
+        //`https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
+        `https://apifood.blacksloop/order-service/orders/v1/owner/accept`,
         {
           order_id: orderId,
         },
@@ -78,8 +78,8 @@ const ReceiveOrder = () => {
   async function rejectOrder(orderId) {
     await axios
       .patch(
-        `https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
-        // `http://localhost:8000/order-service/orders/v1/owner/reject`,
+        //`https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
+        `https://apifood.blacksloop/order-service/orders/v1/owner/reject`,
         {
           order_id: orderId,
         },
@@ -106,8 +106,8 @@ const ReceiveOrder = () => {
   async function completeOrder(orderId) {
     await axios
       .patch(
-        `https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
-        // `http://localhost:8000/order-service/orders/v1/owner/complete`,
+        //`https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
+        `https://apifood.blacksloop/order-service/orders/v1/owner/complete`,
         {
           order_id: orderId,
         },
@@ -135,7 +135,7 @@ const ReceiveOrder = () => {
     await axios
       .post(
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
-        // `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
+        //`https://apifood.blacksloop/order-service/orders/v1/owner/order?page=0&size=10`,
         {
           user_id: userId,
           order_date: nowDate,

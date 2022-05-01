@@ -352,13 +352,16 @@ const OwnerRegister = () => {
       alert("양삭애 맞게 다시 기입해주세요");
     } else {
       axios
-        .post("https://apifood.blacksloop.com/user-service/users/v1/owner/join", {
-          email: inputEmail,
-          username: inputUsername,
-          password: inputPw,
-          phone_num: inputPhonenumber,
-          b_no: bNumber
-        })
+        .post(
+          "https://apifood.blacksloop.com/user-service/users/v1/owner/join",
+          {
+            email: inputEmail,
+            username: inputUsername,
+            password: inputPw,
+            phone_num: inputPhonenumber,
+            b_no: bNumber,
+          }
+        )
         .then(function (response) {
           if (response.data.result === "fail") {
             alert(response.data.message);
