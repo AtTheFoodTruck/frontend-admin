@@ -267,6 +267,7 @@ const OwnerRegister = () => {
     } else {
       axios
         .post(
+          // "https://apifood.blacksloop.com/user-service/users/v1/validation/email",
           "https://apifood.blacksloop.com/user-service/users/v1/validation/email",
           {
             email: inputEmail,
@@ -300,6 +301,7 @@ const OwnerRegister = () => {
     } else {
       axios
         .post(
+          // "https://apifood.blacksloop.com/user-service/users/v1/validation/name",
           "https://apifood.blacksloop.com/user-service/users/v1/validation/name",
           {
             username: inputUsername,
@@ -352,7 +354,8 @@ const OwnerRegister = () => {
       alert("양삭애 맞게 다시 기입해주세요");
     } else {
       axios
-        .post("https://apifood.blacksloop.com/user-service/users/v1/owner/join", {
+        // .post("https://apifood.blacksloop.com/user-service/users/v1/owner/join", {
+          .post("https://apifood.blacksloop.com/user-service/users/v1/owner/join", {
           email: inputEmail,
           username: inputUsername,
           password: inputPw,

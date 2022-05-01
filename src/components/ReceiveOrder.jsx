@@ -28,6 +28,20 @@ const ReceiveOrder = () => {
     Authorization: `Bearer ${authorization}`,
   };
 
+  // if( orderState === "ORDER"){
+  //     setAcceptType(false);
+  //     setRejectType(false);
+  //     setCompleteType(true);
+  // } else if( orderState === "ACCEPTED"){
+  //     setAcceptType(true);
+  //     setRejectType(true);
+  //     setCompleteType(false);
+  // } else { // 주문 거절 상태, 조리 완료 상태는 모든 버튼 비활성화
+  //     setAcceptType(true);
+  //     setRejectType(true);
+  //     setCompleteType(true);
+  // }
+
   // 날짜 함수
   function leftPad(value) { 
     if (value >= 10) { 
@@ -52,11 +66,10 @@ const ReceiveOrder = () => {
   const nowDate = toStringByFormatting(new Date()); // ex)2021-04-24
 
   // 주문 접수 클릭 이벤트
-  async function acceptOrder(orderId) {
-    await axios
-      .patch(
+  function acceptOrder(orderId) {
+    axios.patch(
+        // `https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/accept`,
-        // `http://localhost:8000/order-service/orders/v1/owner/accept`,
         {
           order_id: orderId,
         },
@@ -66,7 +79,12 @@ const ReceiveOrder = () => {
       )
       .then((res) => {
         console.log(res);
-      })
+        if (res.data.result === "success") {
+          alert(res.data.message);
+          document.location.reload();
+        } else {
+          return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
+      }})
       .catch((err) => {
         console.log(err);
       });
@@ -75,11 +93,10 @@ const ReceiveOrder = () => {
   }
 
   // 주문 거절 클릭 이벤트
-  async function rejectOrder(orderId) {
-    await axios
-      .patch(
+  function rejectOrder(orderId) {
+    axios.patch(
+        // `https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/reject`,
-        // `http://localhost:8000/order-service/orders/v1/owner/reject`,
         {
           order_id: orderId,
         },
@@ -90,11 +107,11 @@ const ReceiveOrder = () => {
       .then((res) => {
         console.log(res);
         if (res.data.result === "success") {
-          return alert(res.data.message);
+          alert(res.data.message);
+          document.location.reload();
         } else {
           return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
-        }
-      })
+        }})
       .catch((err) => {
         console.log(err);
       });
@@ -103,11 +120,10 @@ const ReceiveOrder = () => {
   }
 
   // 조리 완료 클릭 이벤트
-  async function completeOrder(orderId) {
-    await axios
-      .patch(
+  function completeOrder (orderId) {
+    axios.patch(
+        // `https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
         `https://apifood.blacksloop.com/order-service/orders/v1/owner/complete`,
-        // `http://localhost:8000/order-service/orders/v1/owner/complete`,
         {
           order_id: orderId,
         },
@@ -118,11 +134,11 @@ const ReceiveOrder = () => {
       .then((res) => {
         console.log(res);
         if (res.data.result === "success") {
-          return alert(res.data.message);
+          alert(res.data.message);
+          document.location.reload();
         } else {
           return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
-        }
-      })
+        }})
       .catch((err) => {
         console.log(err);
       });
@@ -130,12 +146,12 @@ const ReceiveOrder = () => {
   }
 
   // 주문 접수 내역 조회
-  async function getOrderList() {
+  function getOrderList() {
     // const foodtruck = await axios
-    await axios
+    axios
       .post(
-        `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
-        // `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=10`,
+        // `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=${size}`,
+        `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=10`,
         {
           user_id: userId,
           order_date: nowDate,
@@ -173,7 +189,7 @@ const ReceiveOrder = () => {
           </Col>
         </Row>
         <ListGroup>
-          {orderList.map((orderListItem) => (
+          {orderList && orderList.map((orderListItem) => (
             <ReceiveOrderList
               key={orderListItem.orderId}
               orderListItem={orderListItem}
@@ -181,6 +197,9 @@ const ReceiveOrder = () => {
               acceptOrder={acceptOrder}
               rejectOrder={rejectOrder}
               completeOrder={completeOrder}
+              // acceptType={acceptType}
+              // rejectType={rejectType}
+              // completeType={completeType}
             />
           ))}
         </ListGroup>
