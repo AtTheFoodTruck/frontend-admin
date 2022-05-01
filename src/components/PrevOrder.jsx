@@ -14,7 +14,7 @@ import { ko } from "date-fns/locale";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const PrevOrder = () => {
-  const url = `http://localhost:8000/order-service/orders/v1/owner/order?page=0&size=15`;
+  const url = `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=15`;
 
   const authorization = localStorage.getItem("Authorization");
   const [prevOrderList, setPrevOrderList] = useState([]);

@@ -105,7 +105,7 @@ const Modal = ({ handleModal }) => {
     await axios
       .post(
         // `https://apifood.blacksloop.com/item-service/items/v1/owner/item`,
-        `http://localhost:8000/item-service/items/v1/owner/item`,
+        `https://apifood.blacksloop.com/item-service/items/v1/owner/item`,
         {
           // user_id: 2,
           user_id: userId,

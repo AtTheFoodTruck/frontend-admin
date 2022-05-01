@@ -30,7 +30,7 @@ const [arrayLength, setArrayLength] = useState(0);
     const foodtruck = await axios
       .get(
         // `https://apifood.blacksloop.com/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
-        `http://localhost:8000/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
+        `https://apifood.blacksloop.com/item-service/items/v1/owner/item/${userId}?page=0&size=10`,
         { headers }
       )
       .then((res) => {
@@ -50,7 +50,7 @@ const [arrayLength, setArrayLength] = useState(0);
       };
       await axios
         // .delete(`https://apifood.blacksloop.com/item-service/items/v1/owner/item`, {
-            .delete(`http://localhost:8000/item-service/items/v1/owner/item`, {
+            .delete(`https://apifood.blacksloop.com/item-service/items/v1/owner/item`, {
             headers,
             data,
           }
