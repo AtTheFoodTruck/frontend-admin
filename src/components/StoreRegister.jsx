@@ -2,90 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import { log } from "util";
-
-const MemberRegisterContainer = styled.div`
-  position: absolute;
-  align-items: center;
-  top: 15%;
-  left: 46%;
-  width: 25em;
-  margin: auto;
-
-  .container {
-    display: grid;
-    grid-template-rows: 1fr 0.2fr;
-    grid-template-columns: 1fr 0.2fr;
-
-    grid-template-areas:
-      "head ."
-      "store storeDuplicate"
-      "phonenumber ."
-      "address ."
-      "notice ."
-      "openTime ."
-      "radiobutton radiobutton2"
-      "logo ."
-      "join .";
-  }
-
-  .head {
-    grid-area: head;
-    margin-top: 0.5em;
-    text-align-last: center;
-  }
-  .store {
-    grid-area: store;
-    margin-top: 0.5em;
-  }
-  .storeDuplicate {
-    grid-area: storeDuplicate;
-  }
-  .phonenumber {
-    grid-area: phonenumber;
-    margin-top: 0.5em;
-  }
-  .address {
-    grid-area: address;
-    margin-top: 0.5em;
-  }
-  .notice {
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr;
-    grid-area: notice;
-    margin-top: 0.5em;
-  }
-  .textarea {
-    height: 200px;
-    resize: none;
-  }
-  .openTime {
-    grid-area: openTime;
-    margin-top: 0.5em;
-  }
-  .radiobutton {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    grid-area: radiobutton;
-    margin-top: 0.5em;
-  }
-  .logo {
-    grid-area: logo;
-    margin-top: 0.5em;
-  }
-
-  .join {
-    grid-area: join;
-    margin-top: 0.5em;
-  }
-
-  .btn {
-    margin-top: 0.5em;
-    width: 100%;
-  }
-`;
+import ImgUpload from "./ImgUpload";
+import AWS from "aws-sdk";
 
 const StoreRegister = () => {
   // 유저 정보
@@ -104,7 +22,17 @@ const StoreRegister = () => {
     calendar: "",
   });
   const { store, phone, notice, address, calendar } = inputs; // 비구조화 할당을 통해 값 추출
-
+  //img 상태
+  const [imgURL, setImgURL] = useState(""); // image 상태
+  const [fileURL, setFileURL] = useState("img/default_image.png"); //미리보기
+  const [loaded, setLoaded] = useState(false);
+  const [reviewLocation, setReviewLocation] = useState("");
+  // S3 환경 설정
+  AWS.config.update({
+    accessKeyId: process.env.REACT_APP_ACCESS_KEY,
+    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+    region: process.env.REACT_APP_REGION,
+  });
   // InputBox Change Event
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -160,6 +88,7 @@ const StoreRegister = () => {
             phone_num: phone,
             notice: notice,
             category_name: cate,
+            store_img_url: reviewLocation,
             // store_img_url:"imgUrl2",
             // open_time: "2018-12-15T10:00:00",
             // address: "서울시 구로구 공원로길",
@@ -204,6 +133,52 @@ const StoreRegister = () => {
     { id: 6, name: "핫도그" },
     { id: 7, name: "아이스크림" },
   ];
+
+  // img input
+  const handleImgInput = (e) => {
+    e.preventDefault();
+    const fileReader = new FileReader();
+    const file = e.target.files[0];
+    if (file) {
+      setLoaded("loading");
+      fileReader.readAsDataURL(file);
+    }
+    fileReader.onload = () => {
+      //미리보기
+      setFileURL(fileReader.result);
+      //s3
+      setImgURL(e.target.files[0]);
+      setLoaded(true);
+    };
+  };
+
+  // 이미지 업로드 진행
+  const handleImgUpload = (e) => {
+    const file = e.target.files[0];
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        ACL: "public-read",
+        Body: file,
+        Bucket: process.env.REACT_APP_S3_BUCKET,
+        Key: "store/" + file.name,
+      },
+    });
+
+    const promise = upload.promise();
+
+    promise.then(
+      function (data) {
+        setReviewLocation(data.Location);
+        console.log(data.Location + "업로드 성공");
+      },
+
+      function (err) {
+        console.log(err);
+        console.log("env, ", process.env.AWS_CONFIG);
+        return console.log("오류가 발생했습니다");
+      }
+    );
+  };
   return (
     <MemberRegisterContainer>
       <form className="container">
@@ -314,7 +289,19 @@ const StoreRegister = () => {
           <label htmlfor="formFile" className="form-label mt-2 mb-3 ">
             Logo
           </label>
-          <input className="form-control" type="file" id="formFile" />
+          {/* img */}
+          <div class="upload_img">
+            {" "}
+            <ImgUpload
+              setState={setInputs}
+              loaded={loaded}
+              fileURL={fileURL}
+              handleImgInput={handleImgInput}
+              handleImgUpload={handleImgUpload}
+            />
+          </div>
+          {/* <input className="form-control" type="file" id="formFile" /> */}
+          {/* img */}
         </div>
         {/* store push 버튼 */}
         <div className="join">
@@ -332,3 +319,86 @@ const StoreRegister = () => {
 };
 
 export default StoreRegister;
+
+const MemberRegisterContainer = styled.div`
+  position: absolute;
+  align-items: center;
+  top: 15%;
+  left: 46%;
+  width: 25em;
+  margin: auto;
+
+  .container {
+    display: grid;
+    grid-template-rows: 1fr 0.2fr;
+    grid-template-columns: 1fr 0.2fr;
+
+    grid-template-areas:
+      "head ."
+      "store storeDuplicate"
+      "phonenumber ."
+      "address ."
+      "notice ."
+      "openTime ."
+      "radiobutton radiobutton2"
+      "logo ."
+      "join .";
+  }
+
+  .head {
+    grid-area: head;
+    margin-top: 0.5em;
+    text-align-last: center;
+  }
+  .store {
+    grid-area: store;
+    margin-top: 0.5em;
+  }
+  .storeDuplicate {
+    grid-area: storeDuplicate;
+  }
+  .phonenumber {
+    grid-area: phonenumber;
+    margin-top: 0.5em;
+  }
+  .address {
+    grid-area: address;
+    margin-top: 0.5em;
+  }
+  .notice {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-area: notice;
+    margin-top: 0.5em;
+  }
+  .textarea {
+    height: 200px;
+    resize: none;
+  }
+  .openTime {
+    grid-area: openTime;
+    margin-top: 0.5em;
+  }
+  .radiobutton {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-area: radiobutton;
+    margin-top: 0.5em;
+  }
+  .logo {
+    grid-area: logo;
+    margin-top: 0.5em;
+  }
+
+  .join {
+    grid-area: join;
+    margin-top: 0.5em;
+  }
+
+  .btn {
+    margin-top: 0.5em;
+    width: 100%;
+  }
+`;
