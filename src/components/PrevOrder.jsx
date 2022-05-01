@@ -67,7 +67,7 @@ const PrevOrder = () => {
     await axios
       .post(url, data, { headers })
       .then((response) => {
-        setPrevOrderList(response);
+        setPrevOrderList(response.data.data.orders);
         console.log(response);
       })
       .catch((err) => console.log(err.response));
@@ -154,26 +154,17 @@ const PrevOrder = () => {
             <Col className="d-flex justify-content-center p-0">
               <p className="fs-5">닉네임</p>
             </Col>
-            <Col className="d-flex justify-content-center p-0">
+            {/* <Col className="d-flex justify-content-center p-0">
               <p className="fs-5">상세보기</p>
-            </Col>
+            </Col> */}
           </Row>
           <ListGroup>
-            {prevOrderList.map((item) => {
-              return (
-                <PrevOrderList
-                  // key={item.itemId}
-                  item={item}
-                  // handlePlusModal={handlePlusModal}
-                  // handleMinusModal={handleMinusModal}
-                  // deleteMenu={deleteMenu}
-                />
-              );
-            })}
+            {prevOrderList &&
+              prevOrderList.map((item) => {
+                return <PrevOrderList item={item} />;
+              })}
           </ListGroup>
         </Container>
-        {/* {openPlusModal && <Modal handleModal={handlePlusModal} />}
-      {openMinusModal && <Modal handleModal={handleMinusModal} />} */}
       </PrevOrderWrapper>
     </>
   );
