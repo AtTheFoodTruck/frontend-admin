@@ -101,8 +101,8 @@ const MenuRegister = () => {
   const postMenuPush = async () => {
     await axios
       .post(
+        // `https://apifood.blacksloop.com/item-service/items/v1/owner/item`,
         `https://apifood.blacksloop.com/item-service/items/v1/owner/item`,
-        // `http://localhost:8000/item-service/items/v1/owner/item`,
         {
           // user_id: 2,
           user_id: userId,
@@ -121,6 +121,7 @@ const MenuRegister = () => {
           alert("메뉴 등록 성공");
           onReset();
         } else {
+          console.log(res);
           alert("메뉴 등록에 실패하였습니다. 관리자에게 문의해주세여");
         }
       })

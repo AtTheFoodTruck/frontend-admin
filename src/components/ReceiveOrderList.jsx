@@ -11,7 +11,7 @@ const ImgSize = styled.img`
   object-fit: cover;
 `;
 
-const ReceiveOrderList = ({ orderListItem, orderItems, acceptOrder, rejectOrder, completeOrder }) => {
+const ReceiveOrderList = ({ orderListItem, orderItems, acceptOrder, rejectOrder, completeOrder}) => {
 
     const orderId = orderListItem.orderId
     const orderDate = orderListItem.orderTime
@@ -24,13 +24,27 @@ const ReceiveOrderList = ({ orderListItem, orderItems, acceptOrder, rejectOrder,
     const [completeType, setCompleteType] = useState(false);
     let newArray = [];
 
+    // if( orderState === "ORDER"){
+    //     setAcceptType(false);
+    //     setRejectType(false);
+    //     setCompleteType(true);
+    // } else if( orderState === "ACCEPTED"){
+    //     setAcceptType(true);
+    //     setRejectType(true);
+    //     setCompleteType(false);
+    // } else { // 주문 거절 상태, 조리 완료 상태는 모든 버튼 비활성화
+    //     setAcceptType(true);
+    //     setRejectType(true);
+    //     setCompleteType(true);
+    // }
+
 
     useEffect( () => {
-        if( orderListItem.orderStatus === "ORDER"){
+        if( orderState === "ORDER"){
             setAcceptType(false);
             setRejectType(false);
             setCompleteType(true);
-        } else if( orderListItem.orderStatus === "ACCEPTED"){
+        } else if( orderState === "ACCEPTED"){
             setAcceptType(true);
             setRejectType(true);
             setCompleteType(false);
@@ -39,7 +53,7 @@ const ReceiveOrderList = ({ orderListItem, orderItems, acceptOrder, rejectOrder,
             setRejectType(true);
             setCompleteType(true);
         }
-    }, [])
+    }, [orderState])
 
     // itemName
     for( let i=0; i<orderListItem.orderItems.length; i++ ) {
@@ -63,20 +77,20 @@ const ReceiveOrderList = ({ orderListItem, orderItems, acceptOrder, rejectOrder,
         <Col id="menu_name">{newArray.join()}</Col>
         <Col>
             {acceptType 
-                ? <Button disabled={true} onClick={acceptOrder}>주문수락</Button>
-                : <Button disabled={false} onClick={acceptOrder(orderId)}>주문수락</Button>
+                ? <Button disabled={true} onClick={() => acceptOrder}>주문수락</Button>
+                : <Button disabled={false} onClick={() => acceptOrder(orderId)}>주문수락</Button>
             }
         </Col>
         <Col>
             {rejectType
-                ? <Button disabled={true} onClick={rejectOrder}>주문거절</Button>
-                : <Button disabled={false} onClick={rejectOrder(orderId)}>주문거절</Button>
+                ? <Button disabled={true} onClick={() => rejectOrder}>주문거절</Button>
+                : <Button disabled={false} onClick={() => rejectOrder(orderId)}>주문거절</Button>
             }
         </Col>
         <Col>
             {completeType
-                ? <Button disabled={true}  onClick={completeOrder}>조리완료</Button>
-                : <Button disabled={false} onClick={completeOrder(orderId)}>조리완료</Button>
+                ? <Button disabled={true}  onClick={() => completeOrder}>조리완료</Button>
+                : <Button disabled={false} onClick={() => completeOrder(orderId)}>조리완료</Button>
             }
         </Col>
     </ListGroup.Item>

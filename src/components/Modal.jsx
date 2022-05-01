@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import ImgUpload from "./ImgUpload";
 import AWS from "aws-sdk";
+import { useNavigate } from "react-router-dom";
 
 const Modal = ({ handleModal }) => {
   // 유저 정보
@@ -24,6 +25,7 @@ const Modal = ({ handleModal }) => {
   const [fileURL, setFileURL] = useState("img/default_image.png"); //미리보기
   const [reviewLocation, setReviewLocation] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
 
   // InputBox Change Event
   const onChange = (e) => {
@@ -42,6 +44,7 @@ const Modal = ({ handleModal }) => {
       description: "",
       price: "",
     });
+    navigate(0);
   };
 
   // S3 환경 설정
@@ -101,8 +104,8 @@ const Modal = ({ handleModal }) => {
   const postMenuPush = async () => {
     await axios
       .post(
+        // `https://apifood.blacksloop.com/item-service/items/v1/owner/item`,
         `https://apifood.blacksloop.com/item-service/items/v1/owner/item`,
-        // `http://localhost:8000/item-service/items/v1/owner/item`,
         {
           // user_id: 2,
           user_id: userId,
@@ -121,7 +124,8 @@ const Modal = ({ handleModal }) => {
           alert("메뉴 등록 성공");
           onReset();
         } else {
-          alert("메뉴 등록에 실패하였습니다. 관리자에게 문의해주세여");
+          console.log(res);
+          // alert("메뉴 등록에 실패하였습니다. 관리자에게 문의해주세여");
         }
       })
       .catch((err) => console.log("return error" + err));
