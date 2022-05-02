@@ -24,8 +24,7 @@ const PrevOrderList = ({item}) => {
       <ListGroup.Item className="d-inline-flex align-items-center ">
         {/* 주문번호 */}
         {/* <Col>{key}</Col> */}
-
-        <Col>{item.id}</Col>
+        <Col>{item.orderId}</Col>
         <Col>{item.orderStatus}</Col>
         <Col>{item.orderTime}</Col>
         <Col className="orderItems" style={style}>
