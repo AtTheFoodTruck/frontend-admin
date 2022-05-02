@@ -9,7 +9,7 @@ const PrevOrderList = ({item}) => {
     overflow: "hidden",
   };
 
-  const newArray = [];
+  let newArray = [];
 
   console.log(item);
   console.log(item.orderItems[0].itemName)
