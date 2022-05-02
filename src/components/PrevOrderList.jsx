@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, ListGroup } from "react-bootstrap";
 
-const PrevOrderList = (item) => {
+const PrevOrderList = ({item}) => {
   //주문번호,주문상태,주문시간,주문상품,결제금액,아이디?,상세보기
   const style = {
     textOverflow: "ellipsis",
