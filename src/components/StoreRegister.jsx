@@ -79,7 +79,7 @@ const StoreRegister = () => {
     } else {
       axios
         // .post("https://apifood.blacksloop.com/item-service/items/v1/owner/stores", {
-        // .post("http://localhost:8000/item-service/items/v1/owner/stores", {
+        // .post("https://apifood.blacksloop.com/item-service/items/v1/owner/stores", {
         .post(
           "https://apifood.blacksloop.com/item-service/items/v1/owner/stores",
           {
