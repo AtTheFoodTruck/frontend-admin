@@ -22,11 +22,6 @@ const _routes = [
     icon: <FaHome />,
   },
   {
-    path: "/owner-register",
-    name: "회원 가입",
-    icon: <RiVipCrown2Line />,
-  },
-  {
     path: "/store-register",
     name: "상점 등록",
     icon: <AiOutlineCheckCircle />,
