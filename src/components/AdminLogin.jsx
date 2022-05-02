@@ -87,7 +87,7 @@ const AdminLogin = () => {
     } else {
       axios
         // .post("https://apifood.blacksloop.com/user-service/users/v1/logins", {
-          .post("https://apifood.blacksloop.com/user-service/users/v1/logins", {
+        .post("https://apifood.blacksloop.com/user-service/users/v1/logins", {
           email: inputId,
           password: inputPw,
         })
@@ -98,7 +98,7 @@ const AdminLogin = () => {
             setAccessToken(response.data.data.accessToken);
             setRefreshToken(response.data.data.refreshToken);
             setUserId(response.data.data.userId);
-            navigate("/", { replace: true });
+            navigate("/receive-order", { replace: true });
             document.location.reload();
             console.log(response);
           } else if (response.data.message === "Bad credentials") {

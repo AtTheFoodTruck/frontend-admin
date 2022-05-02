@@ -160,7 +160,7 @@ const Sidebar = ({ children }) => {
                   </AnimatePresence>
                 </NavLink>
               ) : (
-                <NavLink to={"/logout"} className="link">
+                <NavLink to={"/"} className="link">
                   <div className="icon">
                     <AiOutlineLogout />
                   </div>
@@ -179,13 +179,13 @@ const Sidebar = ({ children }) => {
                 </NavLink>
               )
             ) : !isAuthorized ? (
-              <NavLink to={"/login"} className="link">
+              <NavLink to={"/"} className="link">
                 <div className="icon">
                   <FaUser />
                 </div>
               </NavLink>
             ) : (
-              <NavLink to={"/logout"} className="link">
+              <NavLink to={"/"} className="link">
                 <div className="icon" onClick={onClickLogout}>
                   <AiOutlineLogout />
                 </div>

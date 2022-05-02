@@ -296,7 +296,7 @@ const StoreRegister = () => {
           </label>
           {/* img */}
           <div class="upload_img">
-            {" "}
+        
             <ImgUpload
               setState={setInputs}
               loaded={loaded}
