@@ -18,7 +18,7 @@ const PrevOrderList = (item) => {
         <Col>{item.orderStatus}</Col>
         <Col>{item.orderTime}</Col>
         <Col className="orderItems" style={style}>
-          {item.orderItems.itemName}
+          {item.orderItems[0].itemName}
         </Col>
         <Col>{item.orderPrice}</Col>
         <Col>{item.userName}</Col>
