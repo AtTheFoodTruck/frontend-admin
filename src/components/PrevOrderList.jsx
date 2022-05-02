@@ -8,6 +8,17 @@ const PrevOrderList = (item) => {
     whiteSpace: "nowrap",
     overflow: "hidden",
   };
+
+  const newArray = [];
+
+  console.log(item);
+  console.log(item.orderItems[0].itemName)
+
+  // itemName
+  for( let i=0; i<item.orderItems.length; i++ ) {
+    newArray = newArray.concat(item.orderItems[i].itemName);
+  }
+
   return (
     <>
       <ListGroup.Item className="d-inline-flex align-items-center ">
@@ -18,7 +29,8 @@ const PrevOrderList = (item) => {
         <Col>{item.orderStatus}</Col>
         <Col>{item.orderTime}</Col>
         <Col className="orderItems" style={style}>
-          {item.orderItems[0].itemName}
+          {/* {item.orderItems[0].itemName} */}
+          {newArray.join()}
         </Col>
         <Col>{item.orderPrice}</Col>
         <Col>{item.userName}</Col>
