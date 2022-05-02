@@ -182,7 +182,7 @@ const ReceiveOrder = () => {
   return (
     <ReceiveOrderWrapper>
       <Container className="text-center">
-        <p className="fs-1">주문접수</p>
+        <p className="fs-1">주문 접수</p>
         <Row className=" mt-5">
           {/* <Col lg={3}></Col> */}
           <Col className="d-flex justify-content-center p-0">
