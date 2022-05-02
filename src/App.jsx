@@ -11,6 +11,7 @@ import OwnerRegister from "./components/OwnerRegister";
 import Sidebar from "./components/Sidebar";
 import StoreRegister from "./components/StoreRegister";
 import PrevOrder from "./components/PrevOrder";
+
 function App() {
   return (
     <>
