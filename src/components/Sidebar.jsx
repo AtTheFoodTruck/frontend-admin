@@ -11,7 +11,6 @@ import {
   AiFillBackward,
 } from "react-icons/ai";
 
-import { Link, NavLink } from "react-router-dom";
 
 let isAuthorized = localStorage.getItem("Authorization");
 
@@ -44,11 +43,13 @@ const _routes = [
 ];
 
 const Sidebar = ({ children }) => {
+ 
   const [routes, setRoutes] = useState(_routes);
   const onClickLogout = () => {
     localStorage.removeItem("Authorization");
     localStorage.removeItem("userId");
     window.location.replace("/");
+   
   };
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
