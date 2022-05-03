@@ -128,8 +128,9 @@ const StoreRegister = () => {
         headers: headers
       }
     ).then( res => {
+      console.log(res);
       if (res.data.result === "success") {
-        alert(res.data.messge);
+        alert(res.data.message);
       } else if(res.data.result === "fail") {
         alert(res.data.message);
       } else {
