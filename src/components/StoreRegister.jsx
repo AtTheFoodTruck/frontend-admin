@@ -117,6 +117,26 @@ const StoreRegister = () => {
     }
   }
 
+  // 가게명 중복체크 이벤트
+  async function validateName() {
+    console.log("중복체크 전 가게명 : " + inputs.store);
+    await axios.post(`https://apifood.blacksloop.com/item-service/items/v1/validation/name`,
+      {
+        store_name: inputs.store
+      }, {
+        headers: headers
+      }
+    ).then( res => {
+      if (res.data.result === "success") {
+        alert(res.data.messge);
+      } else if(res.data.result === "fail") {
+        alert(res.data.message);
+      } else {
+        alert("오류가 발생하였습니다. 관리자에게 문의하세요");
+        }
+    })
+  }
+
   //카테고리
   const [cate, setCate] = useState(null);
   const handlecate = (e) => {
@@ -206,7 +226,7 @@ const StoreRegister = () => {
           </div>
         </div>
         <div className="storeDuplicate">
-          <button type="submit" className=" btn btn-lg btn-outline-secondary">
+          <button onClick={validateName} type="submit" className=" btn btn-lg btn-outline-secondary">
             check
           </button>
         </div>

@@ -35,20 +35,6 @@ const ReceiveOrder = () => {
     Authorization: `Bearer ${authorization}`,
   };
 
-  // if( orderState === "ORDER"){
-  //     setAcceptType(false);
-  //     setRejectType(false);
-  //     setCompleteType(true);
-  // } else if( orderState === "ACCEPTED"){
-  //     setAcceptType(true);
-  //     setRejectType(true);
-  //     setCompleteType(false);
-  // } else { // 주문 거절 상태, 조리 완료 상태는 모든 버튼 비활성화
-  //     setAcceptType(true);
-  //     setRejectType(true);
-  //     setCompleteType(true);
-  // }
-
   // 날짜 함수
   function leftPad(value) {
     if (value >= 10) {
