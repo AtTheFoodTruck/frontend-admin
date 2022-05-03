@@ -131,7 +131,12 @@ const StoreRegister = () => {
     { id: 4, name: "스테이크" },
     { id: 5, name: "닭강정" },
     { id: 6, name: "핫도그" },
-    { id: 7, name: "아이스크림" },
+    { id: 7, name: "중식" },
+    { id: 8, name: "디저트" },
+    { id: 9, name: "일식" },
+    { id: 10, name: "기타" },
+    { id: 11, name: "한식" },
+    { id: 12, name: "분식" },
   ];
 
   // img input
@@ -291,7 +296,7 @@ const StoreRegister = () => {
           </label>
           {/* img */}
           <div class="upload_img">
-            {" "}
+        
             <ImgUpload
               setState={setInputs}
               loaded={loaded}
@@ -323,7 +328,7 @@ export default StoreRegister;
 const MemberRegisterContainer = styled.div`
   position: absolute;
   align-items: center;
-  top: 15%;
+  top: 10%;
   left: 46%;
   width: 25em;
   margin: auto;

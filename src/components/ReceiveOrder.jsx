@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Container, ListGroup, Col, Button, Row, Card } from "react-bootstrap";
-import styled from "styled-components";
-import axios from "axios";
-import ReceiveOrderList from "./ReceiveOrderList";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import React, { useEffect, useState } from 'react';
+import { Container, ListGroup, Col, Button, Row, Card } from 'react-bootstrap';
+import styled from 'styled-components';
+import axios from 'axios';
+import ReceiveOrderList from './ReceiveOrderList';
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 const ReceiveOrderWrapper = styled.div`
   position: absolute;
   align-items: center;
   width: 85%;
-  top: 30%;
+  top: 20%;
 `;
 
-const StyleDashBoard = styled.div`
-  position: absolute;
-  width: 75%;
-  top: 5%;
-  margin-left: 6%;
-  margin-top: 3%;
-`;
+// const StyleDashBoard = styled.div`
+//   position: absolute;
+//   width: 75%;
+//   top: 5%;
+//   margin-left: 6%;
+//   margin-top: 3%;
+// `;
 
 const ReceiveOrder = () => {
   // 변수 초기화
@@ -29,8 +29,8 @@ const ReceiveOrder = () => {
   const [completeType, setCompleteType] = useState(true);
   const size = 10;
   // 유저 정보
-  const authorization = localStorage.getItem("Authorization");
-  const userId = localStorage.getItem("userId");
+  const authorization = localStorage.getItem('Authorization');
+  const userId = localStorage.getItem('userId');
   const headers = {
     Authorization: `Bearer ${authorization}`,
   };
@@ -58,7 +58,7 @@ const ReceiveOrder = () => {
   }
 
   // 날짜 함수
-  function toStringByFormatting(source, delimiter = "-") {
+  function toStringByFormatting(source, delimiter = '-') {
     const year = source.getFullYear();
     const month = leftPad(source.getMonth() + 1);
     const day = leftPad(source.getDate());
@@ -87,11 +87,11 @@ const ReceiveOrder = () => {
       )
       .then((res) => {
         console.log(res);
-        if (res.data.result === "success") {
+        if (res.data.result === 'success') {
           alert(res.data.message);
           document.location.reload();
         } else {
-          return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
+          return alert('오류가 발생하였습니다. 관리자에게 문의하세요');
         }
       })
       .catch((err) => {
@@ -116,11 +116,11 @@ const ReceiveOrder = () => {
       )
       .then((res) => {
         console.log(res);
-        if (res.data.result === "success") {
+        if (res.data.result === 'success') {
           alert(res.data.message);
           document.location.reload();
         } else {
-          return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
+          return alert('오류가 발생하였습니다. 관리자에게 문의하세요');
         }
       })
       .catch((err) => {
@@ -145,11 +145,11 @@ const ReceiveOrder = () => {
       )
       .then((res) => {
         console.log(res);
-        if (res.data.result === "success") {
+        if (res.data.result === 'success') {
           alert(res.data.message);
           document.location.reload();
         } else {
-          return alert("오류가 발생하였습니다. 관리자에게 문의하세요");
+          return alert('오류가 발생하였습니다. 관리자에게 문의하세요');
         }
       })
       .catch((err) => {
@@ -185,21 +185,24 @@ const ReceiveOrder = () => {
         <p className="fs-1">주문 접수</p>
         <Row className=" mt-5">
           {/* <Col lg={3}></Col> */}
-          <Col className="d-flex justify-content-center p-0">
-            <h5>주문번호</h5>
+          <Col className="d-flex justify-content-center p-0 ms-3 fs-5">
+            <p>주문번호</p>
           </Col>
-          <Col className="d-flex justify-content-center p-0">
-            <h5>주문시간</h5>
+          <Col className="d-flex justify-content-center p-0 fs-5">
+            <p>주문시간</p>
           </Col>
-          <Col className="d-flex justify-content-center p-0">
-            <h5>주문상태</h5>
+          <Col className="d-flex justify-content-center p-0 fs-5">
+            <p>주문상태</p>
           </Col>
-          <Col className="d-flex justify-content-center p-0">
-            <h5>주문자</h5>
+          <Col className="d-flex justify-content-center p-0 fs-5">
+            <p>주문자</p>
           </Col>
-          <Col className="d-flex justify-content-center p-0">
-            <h5>아이템</h5>
+          <Col className="d-flex justify-content-center p-0 fs-5">
+            <p>메뉴</p>
           </Col>
+          <Col className="d-flex justify-content-center p-0 fs-5"></Col>
+          <Col className="d-flex justify-content-center p-0 fs-5"></Col>
+          <Col className="d-flex justify-content-center p-0 fs-5"></Col>
         </Row>
         <ListGroup>
           {orderList &&

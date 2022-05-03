@@ -17,7 +17,7 @@ function App() {
     <>
       <Sidebar>
         <Routes>
-          <Route path="/" element={<AdminLogin />} />
+          <Route index element={<AdminLogin />} />
           <Route path="/menu-register" element={<MenuRegister />} />
           <Route path="/receive-order" element={<ReceiveOrder />} />
           <Route path="/menu-list" element={<MenuList />} />

@@ -87,7 +87,7 @@ const AdminLogin = () => {
     } else {
       axios
         // .post("https://apifood.blacksloop.com/user-service/users/v1/logins", {
-          .post("https://apifood.blacksloop.com/user-service/users/v1/logins", {
+        .post("https://apifood.blacksloop.com/user-service/users/v1/logins", {
           email: inputId,
           password: inputPw,
         })
