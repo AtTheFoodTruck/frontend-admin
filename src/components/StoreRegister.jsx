@@ -118,7 +118,8 @@ const StoreRegister = () => {
   }
 
   // 가게명 중복체크 이벤트
-  async function validateName() {
+  async function validateName(e) {
+    e.preventDefault();
     console.log("중복체크 전 가게명 : " + inputs.store);
     await axios.post(`https://apifood.blacksloop.com/item-service/items/v1/validation/name`,
       {
