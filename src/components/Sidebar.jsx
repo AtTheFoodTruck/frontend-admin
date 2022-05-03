@@ -22,11 +22,6 @@ const _routes = [
     icon: <FaHome />,
   },
   {
-    path: "/owner-register",
-    name: "회원 가입",
-    icon: <RiVipCrown2Line />,
-  },
-  {
     path: "/store-register",
     name: "상점 등록",
     icon: <AiOutlineCheckCircle />,
@@ -143,22 +138,40 @@ const Sidebar = ({ children }) => {
           <section className="routes">
             {isOpen ? (
               !isAuthorized ? (
-                <NavLink to={"/"} className="link">
-                  <div className="icon">
-                    <FaUser />
-                  </div>
-                  <AnimatePresence>
-                    <motion.div
-                      variants={showAnimation}
-                      initial="hidden"
-                      animate="show"
-                      exit="hidden"
-                      className="link_text"
-                    >
-                      로그인
-                    </motion.div>
-                  </AnimatePresence>
-                </NavLink>
+                <>
+                  <NavLink to={"/"} className="link">
+                    <div className="icon">
+                      <FaUser />
+                    </div>
+                    <AnimatePresence>
+                      <motion.div
+                        variants={showAnimation}
+                        initial="hidden"
+                        animate="show"
+                        exit="hidden"
+                        className="link_text"
+                      >
+                        로그인
+                      </motion.div>
+                    </AnimatePresence>
+                  </NavLink>
+                  <NavLink to={"/owner-register"} className="link">
+                    <div className="icon">
+                      <RiVipCrown2Line />
+                    </div>
+                    <AnimatePresence>
+                      <motion.div
+                        variants={showAnimation}
+                        initial="hidden"
+                        animate="show"
+                        exit="hidden"
+                        className="link_text"
+                      >
+                        회원가입
+                      </motion.div>
+                    </AnimatePresence>
+                  </NavLink>
+                </>
               ) : (
                 <NavLink to={"/"} className="link">
                   <div className="icon">
@@ -179,11 +192,18 @@ const Sidebar = ({ children }) => {
                 </NavLink>
               )
             ) : !isAuthorized ? (
-              <NavLink to={"/"} className="link">
-                <div className="icon">
-                  <FaUser />
-                </div>
-              </NavLink>
+              <>
+                <NavLink to={"/"} className="link">
+                  <div className="icon">
+                    <FaUser />
+                  </div>
+                </NavLink>
+                <NavLink to={"/owner-register"} className="link">
+                  <div className="icon">
+                    <RiVipCrown2Line />
+                  </div>
+                </NavLink>
+              </>
             ) : (
               <NavLink to={"/"} className="link">
                 <div className="icon" onClick={onClickLogout}>
