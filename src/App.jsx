@@ -10,6 +10,7 @@ import ReceiveOrder from "./components/ReceiveOrder";
 import OwnerRegister from "./components/OwnerRegister";
 import Sidebar from "./components/Sidebar";
 import StoreRegister from "./components/StoreRegister";
+import PrevOrder from "./components/PrevOrder";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/menu-list" element={<MenuList />} />
           <Route path="/owner-register" element={<OwnerRegister />} />
           <Route path="/store-register" element={<StoreRegister />} />
+          <Route path="/prev-order" element={<PrevOrder />} />
         </Routes>
       </Sidebar>
     </>

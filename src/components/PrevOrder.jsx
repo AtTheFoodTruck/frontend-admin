@@ -11,7 +11,7 @@ import { ko } from "date-fns/locale";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const PrevOrder = () => {
-  const url = `https://apifood.blacksloop.com/order-service/orders/v1/owner/order?page=0&size=15`;
+  const url = `https://apifood.blacksloop.com/order-service/orders/v1/owner/prev-order?page=0&size=15`;
 
   const authorization = localStorage.getItem("Authorization");
   const userId = localStorage.getItem("userId");
@@ -128,7 +128,7 @@ const PrevOrder = () => {
             <div
               type="button"
               className="search_btn btn -regular"
-              onClick={handleSearch}
+              onClick={getPrevOrderList}
             >
               조회
             </div>
